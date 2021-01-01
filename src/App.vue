@@ -1,26 +1,23 @@
 <template>
-  <div v-if="manifest">{{manifest}}</div>
-  <HelloWorld v-else msg="Hello Vue 3.0 + Vite" />
+  <Suspense>
+    <template #default>
+      <Main/>
+    </template>
+    <template #fallback>
+      <Loading msg="Loading"/>
+    </template>
+  </Suspense>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import axios from 'axios';
+import Loading from './components/Loading.vue'
+import Main from './components/Main.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  },
-  data() {
-    return {
-      manifest: null,
-    }
-  },
-  mounted() {
-    axios
-      .get('http://localhost:3001/')
-      .then(response => (this.manifest = response.data));
+    Loading,
+    Main,
   }
 }
 </script>
