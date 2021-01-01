@@ -4,19 +4,23 @@
       <Main/>
     </template>
     <template #fallback>
-      <Loading msg="Loading"/>
+      <div class="valign-wrapper" style="height: 100%">
+        <div class="container">
+          <div class="progress grey darken-4">
+            <div class="indeterminate orange"/>
+          </div>
+        </div>
+      </div>
     </template>
   </Suspense>
 </template>
 
 <script>
-import Loading from './components/Loading.vue'
-import Main from './components/Main.vue'
+import Main from './Main.vue'
 
 export default {
   name: 'App',
   components: {
-    Loading,
     Main,
   }
 }
