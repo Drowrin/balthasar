@@ -1,5 +1,8 @@
 <template>
-    <div>{{manifest}}</div>
+    <div v-if="$route.query.q && manifest.entities[$route.query.q]">
+        {{ manifest.entities[$route.query.q] }}
+    </div>
+    <div v-else>nothing</div>
 </template>
 
 <script>
