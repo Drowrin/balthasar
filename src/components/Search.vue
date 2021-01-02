@@ -1,17 +1,42 @@
 <template>
-    <div v-if="$route.query.q && manifest.entities[$route.query.q]">
-        {{ manifest.entities[$route.query.q] }}
+    <div v-if="results" class="row">
+        <EntityBrief class="col s12 m8 l6 xl3" v-for="result in results" :key="result" :data="result" />
     </div>
-    <div v-else>nothing</div>
+    <div v-else>no results</div>
 </template>
 
 <script>
-import { inject } from 'vue';
+import { inject, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+import EntityBrief from "./EntityBrief.vue";
 
 export default {
+    components: {
+        EntityBrief
+    },
     setup() {
-        const manifest = inject('manifest');
-        return { manifest };
+        const route = useRoute();
+
+        const entities = inject('manifest').value.entities;
+
+        const results = ref([]);
+
+        function getResults(q) {
+            if (q && entities[q])
+                results.value = [entities[q]];
+            else
+                results.value = [];
+        }
+
+        getResults(route.query.q);
+
+        watch(
+            () => route.query.q,
+            getResults,
+        );
+
+        return { results };
     }
 }
 </script>
