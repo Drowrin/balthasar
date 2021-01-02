@@ -1,5 +1,5 @@
 <template>
-    <div id="sidebar" class="row grey darken-4">
+    <div id="sidebar" class="row">
         <router-link to="/">
             <i class="medium material-icons center-align col s12">home</i>
         </router-link>
@@ -8,9 +8,7 @@
         </form>
 
     </div>
-    <div id="content">
-        <router-view/>
-    </div>
+    <router-view id="content" class="grey darken-4"/>
 </template>
 
 <script>
@@ -38,8 +36,9 @@ export default {
         // load manifest from local storage if there is a manifest there
         if (localStorage.manifest) manifest.value = JSON.parse(localStorage.manifest);
 
-        // make the manifest available to other components by injection
+        // make the manifest and search term available to other components by injection
         provide('manifest', manifest);
+        provide('searchTerm', searchTerm);
 
         // get curent version hash from api
         const remoteHash = (await axios.get('http://localhost:3001/hash')).data;

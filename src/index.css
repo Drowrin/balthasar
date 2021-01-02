@@ -33,5 +33,11 @@ input {
 
 #content {
   margin-left: 250px;
+  margin-bottom: 0px;
   padding: 0px 10px;
+  min-height: 100vh;
+}
+
+.card-p {
+  margin-top: 10px !important;
 }
