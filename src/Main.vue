@@ -1,16 +1,21 @@
 <template>
-    <div class="row">
-        <i class="medium material-icons col s1">home</i>
-        <form @submit.prevent="search">
-            <input v-model="searchTerm" placeholder="search"  class="col s5"/>
+    <div id="sidebar" class="row grey darken-4">
+        <router-link to="/">
+            <i class="medium material-icons center-align col s12">home</i>
+        </router-link>
+        <form @submit.prevent="search" class="col s12">
+            <input class="col s12" v-model="searchTerm" placeholder="search"/>
         </form>
+
     </div>
-    <router-view />
+    <div id="content">
+        <router-view/>
+    </div>
 </template>
 
 <script>
 import { provide, ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 
 export default {
