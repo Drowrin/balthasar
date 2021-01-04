@@ -1,7 +1,7 @@
 <template>
     <table><tbody><tr>
-        <td>AC {{d.ac}}</td>
-        <td class="right">{{d.properties.map(prop => prop.display).join(" ")}}</td>
+        <td>AC {{d.armor.ac}}</td>
+        <td class="right">{{d.equipment.properties.map(prop => prop.display).join(" ")}}</td>
     </tr></tbody></table>
 </template>
 

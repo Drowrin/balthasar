@@ -1,8 +1,8 @@
 <template>
     <table><tbody><tr>
-        <td>weight: {{d.weight}}</td>
-        <td>value: {{d.cost}}</td>
-        <td class="right">{{d.categories.map(cat => cat.name).join(" ")}}</td>
+        <td>weight: {{d.equipment.weight}}</td>
+        <td>value: {{d.equipment.cost}}</td>
+        <td class="right">{{d.equipment.categories.map(cat => cat.name).join(" ")}}</td>
     </tr></tbody></table>
 </template>
 
