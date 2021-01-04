@@ -1,5 +1,5 @@
 <template>
-    <table class="centered"><tbody><tr>
+    <table><tbody><tr>
         <td>AC {{d.ac}}</td>
         <td v-for="property in d.properties" :key="property">{{property.display}}</td>
     </tr></tbody></table>

@@ -1,5 +1,5 @@
 <template>
-    <table class="centered"><tbody><tr>
+    <table><tbody><tr>
         <td>{{d.weight}}</td>
         <td>{{d.cost}}</td>
         <td v-for="category in d.categories" :key="category">{{category.name}}</td>
