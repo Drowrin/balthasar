@@ -2,7 +2,7 @@
     <table><tbody><tr>
         <td>{{d.weight}}</td>
         <td>{{d.cost}}</td>
-        <td v-for="category in d.categories" :key="category">{{category.name}}</td>
+        <td class="right">{{d.categories.map(cat => cat.name).join(" ")}}</td>
     </tr></tbody></table>
 </template>
 
