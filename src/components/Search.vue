@@ -7,29 +7,26 @@
 
 <script>
 import { inject, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 
 export default {
     setup() {
-        const route = useRoute();
-
-        const entities = inject('manifest').value.entities;
+        const searchTerm = inject('searchTerm');
+        const fuse = inject('fuse');
+        const searchArray = inject('searchArray');
 
         const results = ref([]);
 
         function getResults(q) {
-            if (q && entities[q])
-                results.value = [entities[q]];
-            else
-                results.value = [];
+            if (q) {
+                results.value = fuse.value.search(q).map(r => searchArray.value[r.refIndex]);
+                console.log(results.value);
+            }
+            else results.value = [];
         }
 
-        getResults(route.query.q);
+        getResults(searchTerm.value);
 
-        watch(
-            () => route.query.q,
-            getResults,
-        );
+        watch(() => searchTerm.value, getResults);
 
         return { results };
     }
