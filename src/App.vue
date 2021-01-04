@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar" class="row">
+  <div id="sidebar" class="row z-depth-2">
     <router-link to="/">
         <i class="medium material-icons center-align col s12">home</i>
     </router-link>

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="results" class="row grid">
+    <div v-if="results" class="row grid" style="margin-bottom: 0px !important;">
         <EntityBrief class="col s12 l6 xl4 grid-item" v-for="result in results" :key="result" :d="result.item" />
     </div>
     <div v-else>no results</div>
