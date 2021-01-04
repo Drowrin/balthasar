@@ -11,6 +11,10 @@ body {
   background-color: #121212;
 }
 
+tr {
+  border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+}
+
 .text-emphasis {
   color: rgba(255, 255, 255, 222);
 }
