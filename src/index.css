@@ -1,6 +1,6 @@
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  color: rgba(255, 255, 255, 153);
+  color: rgba(255, 255, 255, 0.6);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
@@ -16,11 +16,11 @@ tr {
 }
 
 .text-emphasis {
-  color: rgba(255, 255, 255, 222);
+  color: rgba(255, 255, 255, 0.87) !important;
 }
 
 .text-disabled {
-  color: rgba(255, 255, 255, 77);
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
 input {
