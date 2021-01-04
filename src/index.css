@@ -46,3 +46,8 @@ input {
 .card-p {
   margin-top: 10px !important;
 }
+
+.category-label {
+  margin: 5px;
+  font-size: 15px;
+}

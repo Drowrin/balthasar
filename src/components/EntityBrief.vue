@@ -10,11 +10,7 @@
                         {{d.name}}
                     </span>
 
-                    <span
-                        class="text-disabled right"
-                        style="margin: 5px; font-size: 15px;"
-                        v-for="cat in d.categories"
-                        :key="cat">
+                    <span class="text-disabled category-label right" v-for="cat in d.categories" :key="cat">
                         {{cat.name}}
                     </span>
                 </div>
