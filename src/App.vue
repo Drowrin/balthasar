@@ -1,7 +1,7 @@
 <template>
   <div id="sidebar" class="row z-depth-2">
     <router-link to="/">
-        <i class="medium material-icons center-align col s12">home</i>
+        <i class="medium hover-text material-icons center-align col s12">home</i>
     </router-link>
     <form @submit.prevent="search" class="col s12">
         <input class="col s12" v-model="searchTerm" placeholder="search"/>

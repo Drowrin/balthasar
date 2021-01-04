@@ -1,6 +1,6 @@
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
@@ -50,4 +50,12 @@ input {
 .category-label {
   margin: 5px;
   font-size: 15px;
+}
+
+a:link, a:visited {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+
+a:hover {
+  color: #ff9800 !important;
 }

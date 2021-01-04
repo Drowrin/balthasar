@@ -3,15 +3,19 @@
         <div class="card hoverable grey darken-3">
             <div class="card-content text-emphasis">
                 <div class="card-title" style="margin-bottom: 0px;">
-                    <span v-if="d.property !== undefined && d.property.display">
-                        {{d.property.display}}
-                    </span>
-                    <span v-else>
-                        {{d.name}}
-                    </span>
+                    <EntityLink :d="d">
+                        <span v-if="d.property !== undefined && d.property.display">
+                            {{d.property.display}}
+                        </span>
+                        <span v-else>
+                            {{d.name}}
+                        </span>
+                    </EntityLink>
 
                     <span class="text-disabled category-label right" v-for="cat in d.categories" :key="cat">
-                        {{cat.name}}
+                        <EntityLink :d="cat">
+                            {{cat.name}}
+                        </EntityLink>
                     </span>
                 </div>
                 
@@ -24,7 +28,9 @@
                     </tr>
                     <tr v-if="d.equipment && d.equipment.properties.length > 0">
                         <td class="left" v-for="prop in d.equipment.properties" :key="prop">
-                            {{prop.display}}
+                            <EntityLink :d="prop">
+                                {{prop.display}}
+                            </EntityLink>
                         </td>
                     </tr>
                     <tr v-if="d.vehicle"><td>
