@@ -1,6 +1,6 @@
 <template>
     <div v-if="results" class="row grid">
-        <EntityBrief class="col s12 l6 xl4 grid-item" v-for="result in results" :key="result" :d="result" />
+        <EntityBrief class="col s12 l6 xl4 grid-item" v-for="result in results" :key="result" :d="result.item" />
     </div>
     <div v-else>no results</div>
 </template>
@@ -15,13 +15,12 @@ export default {
     setup() {
         const searchTerm = inject('searchTerm');
         const fuse = inject('fuse');
-        const searchArray = inject('searchArray');
 
         const results = ref([]);
 
         function getResults(q) {
             if (q) {
-                results.value = fuse.value.search(q).map(r => searchArray.value[r.refIndex]);
+                results.value = fuse.value.search(q);
             }
             else results.value = [];
         }
@@ -36,7 +35,6 @@ export default {
         msnry = new Masonry('.grid', {});
     },
     updated() {
-        console.log('updated');
         msnry.reloadItems();
         msnry.layout();
     }

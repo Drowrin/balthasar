@@ -10,7 +10,6 @@ import Fuse from 'fuse.js';
 export default {
     async setup() {
         const manifest = ref({});
-        const searchArray = ref([]);
         const fuse = ref(new Fuse());
 
         var searchIndex = {};
@@ -22,7 +21,6 @@ export default {
         // make the manifest and search index available to other components by injection
         provide('manifest', manifest);
         provide('fuse', fuse);
-        provide('searchArray', searchArray);
 
         // get curent version hash from api
         const remoteHash = (await axios.get('http://localhost:3001/hash')).data;
@@ -37,10 +35,13 @@ export default {
             localStorage.hash = remoteHash;
         }
 
-        searchArray.value = Object.values(manifest.value.entities);
-
-        const options = {};
-        fuse.value = new Fuse(searchArray.value, options, Fuse.parseIndex(searchIndex));
+        const options = {
+            threshold: 0.55,
+            includeMatches: true,
+            includeScore: true,
+            useExtendedSearch: true,
+        };
+        fuse.value = new Fuse( Object.values(manifest.value.entities), options, Fuse.parseIndex(searchIndex));
     }
 }
 </script>
