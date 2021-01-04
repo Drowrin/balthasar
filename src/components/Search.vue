@@ -33,6 +33,8 @@ export default {
     },
     mounted() {
         msnry = new Masonry('.grid', {});
+        msnry.reloadItems();
+        msnry.layout();
     },
     updated() {
         msnry.reloadItems();
