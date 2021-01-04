@@ -1,13 +1,11 @@
-#app {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.6) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   padding: 0;
-}
 
-body {
   background-color: #121212;
 }
 
@@ -20,7 +18,11 @@ tr {
 }
 
 .text-disabled {
-  color: rgba(255, 255, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.text-disabled:hover {
+  color: #ff9800 !important;
 }
 
 input {
@@ -58,4 +60,12 @@ a:link, a:visited {
 
 a:hover {
   color: #ff9800 !important;
+}
+
+.popover {
+  position: absolute;
+  width: 400px;
+  z-index: 1000;
+  pointer-events: none;
+  overflow: hidden;
 }

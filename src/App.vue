@@ -7,7 +7,7 @@
         <input class="col s12" v-model="searchTerm" placeholder="search"/>
     </form>
   </div>
-  <div id="content" class="grey darken-4">
+  <div id="content" class="grey darken-4" @mousemove="mouseMove">
     <Suspense>
       <template #default>
         <RouterContent/>
@@ -51,7 +51,6 @@ export default {
         }
     )
 
-
     /**
      * Called by submitting the search bar.
      */
@@ -60,8 +59,19 @@ export default {
             // switch router to the search component and pass the search term as a query
             router.push(`/search?q=${searchTerm.value}`);
     }
+
+    const top = ref(0);
+    const left = ref(0);
+
+    const mouseMove = function (event) {
+      left.value = event.clientX;
+      top.value = event.clientY;
+    };
+
+    provide('mouseLeft', left);
+    provide('mouseTop', top);
     
-    return { search, searchTerm };
+    return { search, searchTerm, mouseMove };
   }
 }
 </script>

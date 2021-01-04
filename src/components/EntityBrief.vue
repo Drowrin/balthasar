@@ -3,7 +3,7 @@
         <div class="card hoverable grey darken-3">
             <div class="card-content text-emphasis">
                 <div class="card-title" style="margin-bottom: 0px;">
-                    <EntityLink :d="d">
+                    <EntityLink :d="d" :tooltip="false">
                         <span v-if="d.property !== undefined && d.property.display">
                             {{d.property.display}}
                         </span>
@@ -12,9 +12,9 @@
                         </span>
                     </EntityLink>
 
-                    <span class="text-disabled category-label right" v-for="cat in d.categories" :key="cat">
+                    <span class="category-label right" v-for="cat in d.categories" :key="cat">
                         <EntityLink :d="cat">
-                            {{cat.name}}
+                            <span class="text-disabled">{{cat.name}}</span>
                         </EntityLink>
                     </span>
                 </div>
