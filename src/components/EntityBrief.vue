@@ -2,16 +2,22 @@
     <div>
         <div class="card hoverable grey darken-3">
             <div class="card-content text-emphasis">
-                <span class="card-title" style="margin-bottom: 0px;">
-                    {{d.name}}
-                        <span
-                            class="text-disabled"
-                            style="margin: 5px; font-size: 15px;"
-                            v-for="cat in d.categories"
-                            :key="cat">
-                            {{cat.name}}
-                        </span>
-                </span>
+                <div class="card-title" style="margin-bottom: 0px;">
+                    <span v-if="d.property !== undefined && d.property.display">
+                        {{d.property.display}}
+                    </span>
+                    <span v-else>
+                        {{d.name}}
+                    </span>
+
+                    <span
+                        class="text-disabled right"
+                        style="margin: 5px; font-size: 15px;"
+                        v-for="cat in d.categories"
+                        :key="cat">
+                        {{cat.name}}
+                    </span>
+                </div>
                 
                 <table><tbody>
                     <tr>
@@ -45,10 +51,7 @@
 
                 <p class="card-p" v-if="d.description">{{d.description}}</p>
 
-                <div v-if="d.property">
-                    <h6 v-if="d.property.display" class="text-emphasis">{{d.property.display}}</h6>
-                    <p>{{d.property.description}}</p>
-                </div>
+                <p v-if="d.property && !d.description">{{d.property.description}}</p>
             </div>
         </div>
     </div>
