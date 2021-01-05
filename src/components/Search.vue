@@ -14,13 +14,17 @@ var msnry;
 export default {
     setup() {
         const searchTerm = inject('searchTerm');
-        const fuse = inject('fuse');
+        const searchWorker = inject('searchWorker');
 
         const results = ref([]);
 
+        searchWorker.onmessage = function (e) {
+            results.value = e.data;
+        }
+
         function getResults(q) {
             if (q) {
-                results.value = fuse.value.search(q);
+                searchWorker.postMessage(q);
             }
             else results.value = [];
         }
@@ -37,8 +41,10 @@ export default {
         msnry.layout();
     },
     updated() {
-        msnry.reloadItems();
-        msnry.layout();
+        this.$nextTick(function () {
+            msnry.reloadItems();
+            msnry.layout();
+        });
     }
 }
 </script>

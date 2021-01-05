@@ -10,7 +10,8 @@ import Fuse from 'fuse.js';
 export default {
     async setup() {
         const manifest = ref({});
-        const fuse = ref(new Fuse());
+
+        var searchWorker = new Worker("/search.worker.js");
 
         var searchIndex = {};
 
@@ -20,7 +21,7 @@ export default {
 
         // make the manifest and search index available to other components by injection
         provide('manifest', manifest);
-        provide('fuse', fuse);
+        provide('searchWorker', searchWorker);
 
         // get curent version hash from api
         const remoteHash = (await axios.get('http://localhost:3001/hash')).data;
@@ -41,7 +42,14 @@ export default {
             includeScore: true,
             useExtendedSearch: true,
         };
-        fuse.value = new Fuse( Object.values(manifest.value.entities), options, Fuse.parseIndex(searchIndex));
+
+        searchWorker.postMessage({
+            fuse: {
+                values: JSON.stringify(Object.values(manifest.value.entities)),
+                options: options,
+                index: searchIndex,
+            }
+        });
     }
 }
 </script>
