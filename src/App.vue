@@ -4,7 +4,7 @@
         <i class="medium hover-text material-icons center-align col s12">home</i>
     </router-link>
     <form @submit.prevent="search" class="col s12">
-        <input class="col s12" v-model="searchTerm" placeholder="search"/>
+        <input class="col s12" v-model="searchInput" placeholder="search" @keydown="keydown" @keyup="keyup"/>
     </form>
   </div>
   <div id="content" class="grey darken-4" @mousemove="mouseMove">
@@ -39,6 +39,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
+    const searchInput = ref("");
     const searchTerm = ref("");
     provide('searchTerm', searchTerm);
 
@@ -46,8 +47,10 @@ export default {
     watch(
         () => route.query,
         query => {
-            if (query.q)
+            if (query.q) {
+                searchInput.value = query.q;
                 searchTerm.value = query.q;
+            }
         }
     )
 
@@ -55,9 +58,24 @@ export default {
      * Called by submitting the search bar.
      */
     function search() {
-        if (searchTerm.value)
+        if (searchInput.value) {
+            searchTerm.value = searchInput.value;
             // switch router to the search component and pass the search term as a query
             router.push(`/search?q=${searchTerm.value}`);
+        }
+    }
+
+    var timer;
+    const keydown = function () {
+      clearTimeout(timer);
+    }
+
+    const keyup = function () {
+      clearTimeout(timer);
+      timer = setTimeout(
+        () => searchTerm.value = searchInput.value,
+        150
+      );
     }
 
     const top = ref(0);
@@ -71,7 +89,7 @@ export default {
     provide('mouseLeft', left);
     provide('mouseTop', top);
     
-    return { search, searchTerm, mouseMove };
+    return { search, searchInput, keydown, keyup, mouseMove };
   }
 }
 </script>

@@ -10,6 +10,7 @@ import { inject, ref, watch } from 'vue';
 import Masonry from 'masonry-layout';
 
 var msnry;
+var reloadMsnry = true;
 
 export default {
     setup() {
@@ -23,10 +24,10 @@ export default {
         }
 
         function getResults(q) {
-            if (q) {
-                searchWorker.postMessage(q);
-            }
+            if (q) searchWorker.postMessage(q);
             else results.value = [];
+
+            reloadMsnry = true;
         }
 
         getResults(searchTerm.value);
@@ -41,10 +42,11 @@ export default {
         msnry.layout();
     },
     updated() {
-        this.$nextTick(function () {
+        if (reloadMsnry) {
             msnry.reloadItems();
             msnry.layout();
-        });
+            reloadMsnry = false;
+        }
     }
 }
 </script>
