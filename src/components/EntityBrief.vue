@@ -26,8 +26,8 @@
                         <td class="right" v-if="d.weapon">{{d.weapon.damage}} {{d.weapon.type}}</td>
                         <td class="right" v-if="d.armor">{{d.armor.ac}} AC</td>
                     </tr>
-                    <tr v-if="d.equipment && d.equipment.properties.length > 0">
-                        <td class="left" v-for="prop in d.equipment.properties" :key="prop">
+                    <tr v-if="d.properties && d.properties.length > 0">
+                        <td class="left" v-for="prop in d.properties" :key="prop">
                             <EntityLink :d="prop">
                                 {{prop.display}}
                             </EntityLink>
