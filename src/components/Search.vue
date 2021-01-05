@@ -37,9 +37,10 @@ export default {
         return { results };
     },
     mounted() {
-        msnry = new Masonry('.grid', {});
-        msnry.reloadItems();
-        msnry.layout();
+        msnry = new Masonry('.grid', {
+            percentPosition: true,
+            transitionDuration: 0,
+        });
     },
     updated() {
         if (reloadMsnry) {
