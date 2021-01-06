@@ -21,8 +21,14 @@
                 
                 <table><tbody>
                     <tr>
-                        <td class="left" v-if="d.equipment && d.equipment.weight">{{d.equipment.weight}}</td>
-                        <td class="left" v-if="d.equipment && d.equipment.cost">{{d.equipment.cost}}</td>
+                        <td class="left" v-if="d.item && d.item.weight">{{d.item.weight}} lb</td>
+                        <td class="left" v-if="d.item && d.item.cost">
+                            <span v-if="d.item.cost.pp">{{d.item.cost.pp}} pp</span>
+                            <span v-if="d.item.cost.gp">{{d.item.cost.gp}} gp</span>
+                            <span v-if="d.item.cost.ep">{{d.item.cost.ep}} ep</span>
+                            <span v-if="d.item.cost.sp">{{d.item.cost.sp}} sp</span>
+                            <span v-if="d.item.cost.cp">{{d.item.cost.cp}} cp</span>
+                        </td>
                         <td class="right" v-if="d.weapon">{{d.weapon.damage}} {{d.weapon.type}}</td>
                         <td class="right" v-if="d.armor">{{d.armor.ac}} AC</td>
                     </tr>
