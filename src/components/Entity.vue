@@ -1,5 +1,5 @@
 <template>
-    {{JSON.stringify(d, null, 2)}}
+    {{ JSON.stringify(d, null, 2) }}
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
         id: {
             type: String,
             required: true,
-        }
+        },
     },
     setup(props) {
         const manifest = inject('manifest');
@@ -20,6 +20,6 @@ export default {
         console.log(d);
 
         return { manifest, d };
-    }
-}
+    },
+};
 </script>

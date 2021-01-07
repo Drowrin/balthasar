@@ -1,20 +1,22 @@
 {
-  "name": "balthasar",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "fuse.js": "^6.4.5",
-    "imagesloaded": "^4.1.4",
-    "masonry-layout": "^4.2.2",
-    "vue": "^3.0.4",
-    "vue-router": "^4.0.2"
-  },
-  "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.4",
-    "vite": "^1.0.0-rc.13"
-  }
+    "name": "balthasar",
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "prettier": "prettier --write ."
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "fuse.js": "^6.4.5",
+        "imagesloaded": "^4.1.4",
+        "masonry-layout": "^4.2.2",
+        "prettier": "^2.2.1",
+        "vue": "^3.0.4",
+        "vue-router": "^4.0.2"
+    },
+    "devDependencies": {
+        "@vue/compiler-sfc": "^3.0.4",
+        "vite": "^1.0.0-rc.13"
+    }
 }

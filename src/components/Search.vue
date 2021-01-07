@@ -1,6 +1,11 @@
 <template>
-    <div v-if="results" class="row grid" style="margin-bottom: 0px !important;">
-        <EntityBrief class="col s12 l6 xl4 grid-item" v-for="result in results" :key="result" :d="result.item" />
+    <div v-if="results" class="row grid" style="margin-bottom: 0px !important">
+        <EntityBrief
+            class="col s12 l6 xl4 grid-item"
+            v-for="result in results"
+            :key="result"
+            :d="result.item"
+        />
     </div>
     <div v-else>no results</div>
 </template>
@@ -22,7 +27,7 @@ export default {
 
         searchWorker.onmessage = function (e) {
             results.value = e.data;
-        }
+        };
 
         function getResults(q) {
             if (q) searchWorker.postMessage(q);
@@ -43,7 +48,7 @@ export default {
             transitionDuration: 0,
         });
 
-        imagesLoaded('.grid', function() {
+        imagesLoaded('.grid', function () {
             msnry.reloadItems();
             msnry.layout();
         });
@@ -54,6 +59,6 @@ export default {
             msnry.layout();
             reloadMsnry = false;
         }
-    }
-}
+    },
+};
 </script>
