@@ -8,6 +8,7 @@
 <script>
 import { inject, ref, watch } from 'vue';
 import Masonry from 'masonry-layout';
+import imagesLoaded from 'imagesloaded';
 
 var msnry;
 var reloadMsnry = true;
@@ -40,6 +41,11 @@ export default {
         msnry = new Masonry('.grid', {
             percentPosition: true,
             transitionDuration: 0,
+        });
+
+        imagesLoaded('.grid', function() {
+            msnry.reloadItems();
+            msnry.layout();
         });
     },
     updated() {
