@@ -1,5 +1,5 @@
 <template>
-    <div>{{manifest}}</div>
+    <div>{{ manifest }}</div>
 </template>
 
 <script>
@@ -10,9 +10,9 @@ export default {
         const manifest = inject('manifest');
         const searchTerm = inject('searchTerm');
 
-        searchTerm.value = "";
+        searchTerm.value = '';
 
         return { manifest };
-    }
-}
+    },
+};
 </script>

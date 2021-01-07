@@ -5,7 +5,7 @@
         @mouseenter="isShowing = true"
         @mouseleave="isShowing = false"
     >
-        <slot/>
+        <slot />
     </router-link>
     <teleport to="#popup-target">
         <div
@@ -14,8 +14,8 @@
             :style="`left: ${left}px !important; top: ${top}px !important;`"
         >
             <div class="card-content">
-                <span class="card-title text-emphasis">{{d.display || d.name || d.id }}</span>
-                <p>{{d.description}}</p>
+                <span class="card-title text-emphasis">{{ d.display || d.name || d.id }}</span>
+                <p>{{ d.description }}</p>
             </div>
         </div>
     </teleport>
@@ -28,13 +28,13 @@ export default {
     props: {
         d: {
             type: Object,
-            validator: d => d.id !== undefined,
+            validator: (d) => d.id !== undefined,
             required: true,
         },
         tooltip: {
             type: Boolean,
             default: true,
-        }
+        },
     },
     setup(props) {
         const uid = getCurrentInstance().uid;
@@ -45,5 +45,5 @@ export default {
 
         return { isShowing, uid, top, left };
     },
-}
+};
 </script>

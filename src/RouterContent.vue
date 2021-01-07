@@ -1,5 +1,5 @@
 <template>
-    <router-view/>
+    <router-view />
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     async setup() {
         const manifest = ref({});
 
-        var searchWorker = new Worker("/search.worker.js");
+        var searchWorker = new Worker('/search.worker.js');
 
         var searchIndex = {};
 
@@ -28,9 +28,9 @@ export default {
 
         // if the hashes do not match, save new data
         if (localStorage.hash != remoteHash) {
-            console.log("Hashes do not match! Downloading new data...")
+            console.log('Hashes do not match! Downloading new data...');
             manifest.value = (await axios.get('http://localhost:3001/')).data;
-            searchIndex = (await axios.get("http://localhost:3001/index")).data;
+            searchIndex = (await axios.get('http://localhost:3001/index')).data;
             localStorage.manifest = JSON.stringify(manifest.value);
             localStorage.searchIndex = JSON.stringify(searchIndex);
             localStorage.hash = remoteHash;
@@ -48,8 +48,8 @@ export default {
                 values: JSON.stringify(Object.values(manifest.value.entities)),
                 options: options,
                 index: searchIndex,
-            }
+            },
         });
-    }
-}
+    },
+};
 </script>
