@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="card hoverable grey darken-3">
+            <div v-if="d.img" class="card-image">
+                <img :src="d.img.uri">
+            </div>
             <div class="card-content text-emphasis">
                 <div class="card-title" style="margin-bottom: 0px;">
                     <EntityLink :d="d" :tooltip="false">
