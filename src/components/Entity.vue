@@ -14,7 +14,7 @@ export default {
     },
     setup(props) {
         const manifest = inject('manifest');
-        const d = manifest.value.entities[props.id];
+        const d = manifest.value[props.id];
 
         console.log(manifest.value);
         console.log(d);

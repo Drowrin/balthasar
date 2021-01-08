@@ -16,8 +16,14 @@ export default {
         var searchIndex = {};
 
         // load manifest from local storage if there is a manifest there
-        if (localStorage.manifest) manifest.value = JSON.parse(localStorage.manifest);
-        if (localStorage.searchIndex) searchIndex = JSON.parse(localStorage.searchIndex);
+        const mdata = localStorage.casper;
+        if (mdata) {
+            const data = JSON.parse(mdata);
+            manifest.value = data.manifest;
+            searchIndex = data.index;
+        }
+
+        console.log(manifest.value);
 
         // make the manifest and search index available to other components by injection
         provide('manifest', manifest);
@@ -29,10 +35,13 @@ export default {
         // if the hashes do not match, save new data
         if (localStorage.hash != remoteHash) {
             console.log('Hashes do not match! Downloading new data...');
-            manifest.value = (await axios.get('http://localhost:3001/')).data;
-            searchIndex = (await axios.get('http://localhost:3001/index')).data;
-            localStorage.manifest = JSON.stringify(manifest.value);
-            localStorage.searchIndex = JSON.stringify(searchIndex);
+
+            const data = (await axios.get('http://localhost:3001/')).data;
+
+            manifest.value = data.manifest;
+            searchIndex = data.index;
+
+            localStorage.casper = JSON.stringify(data);
             localStorage.hash = remoteHash;
         }
 
@@ -45,7 +54,7 @@ export default {
 
         searchWorker.postMessage({
             fuse: {
-                values: JSON.stringify(Object.values(manifest.value.entities)),
+                values: JSON.stringify(Object.values(manifest.value)),
                 options: options,
                 index: searchIndex,
             },
