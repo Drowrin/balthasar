@@ -1,8 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
-import Home from '../components/Home.vue';
-import Search from '../components/Search.vue';
-import Entity from '../components/Entity.vue';
+const Home = () => import('../components/Home.vue');
+const Search = () => import('../components/Search.vue');
+const Entity = () => import('../components/Entity.vue');
 
 const routes = [
     {
