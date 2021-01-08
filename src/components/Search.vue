@@ -48,15 +48,19 @@ export default {
             transitionDuration: 0,
         });
 
-        imagesLoaded('.grid', function () {
-            msnry.reloadItems();
-            msnry.layout();
-        });
+        const nextTick = this.$nextTick;
     },
     updated() {
         if (reloadMsnry) {
             msnry.reloadItems();
             msnry.layout();
+
+            imagesLoaded('.grid', function () {
+                console.log('images loaded');
+                msnry.reloadItems();
+                msnry.layout();
+            });
+
             reloadMsnry = false;
         }
     },
