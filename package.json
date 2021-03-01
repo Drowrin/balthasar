@@ -12,6 +12,7 @@
         "fuse.js": "^6.4.6",
         "imagesloaded": "^4.1.4",
         "masonry-layout": "^4.2.2",
+        "tippy.js": "^6.3.1",
         "vue": "^3.0.4",
         "vue-router": "^4.0.2"
     },

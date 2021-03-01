@@ -1,28 +1,16 @@
 <template>
-    <router-link
-        :id="`link${uid}`"
-        :to="`/entity/${d.id}`"
-        @mouseenter="isShowing = true"
-        @mouseleave="isShowing = false"
-    >
+    <router-link :id="id" :to="`/entity/${d.id}`">
         <slot />
     </router-link>
-    <teleport to="#popup-target">
-        <div
-            v-show="isShowing && tooltip"
-            class="popover card grey darken-3"
-            :style="`left: ${left}px !important; top: ${top}px !important;`"
-        >
-            <div class="card-content">
-                <span class="card-title text-emphasis">{{ d.display || d.name || d.id }}</span>
-                <p>{{ d.description }}</p>
-            </div>
-        </div>
-    </teleport>
 </template>
 
+<style>
+@import 'tippy.js/animations/shift-away-extreme.css';
+</style>
+
 <script>
-import { ref, getCurrentInstance, inject } from 'vue';
+import { getCurrentInstance } from 'vue';
+import tippy from 'tippy.js';
 
 export default {
     props: {
@@ -36,14 +24,39 @@ export default {
             default: true,
         },
     },
-    setup(props) {
-        const uid = getCurrentInstance().uid;
-        const isShowing = ref(false);
+    setup() {
+        const id = `link${getCurrentInstance().uid}`;
 
-        const top = inject('mouseTop');
-        const left = inject('mouseLeft');
+        return { id };
+    },
+    mounted() {
+        if (this.tooltip) {
+            tippy(`#link${getCurrentInstance().uid}`, {
+                allowHTML: true,
+                interactive: true,
+                ignoreAttributes: true,
 
-        return { isShowing, uid, top, left };
+                duration: 150,
+                animation: 'shift-away-extreme',
+
+                placement: 'bottom',
+                popperOptions: {
+                    modifiers: [
+                        {
+                            name: 'preventOverflow',
+                            options: {
+                                padding: 40,
+                                boundary: document.querySelector('#content'),
+                            },
+                        },
+                    ],
+                },
+
+                content: `<div class="card grey darken-4 z-depth-5">
+                    <div class="card-content"><span class="text-emphasis">${this.d.description}</span></div>
+                </div>`,
+            });
+        }
     },
 };
 </script>
