@@ -12,8 +12,6 @@ export default {
 
         searchTerm.value = '';
 
-        console.log(manifest);
-
         return { manifest };
     },
 };

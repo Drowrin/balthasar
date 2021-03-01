@@ -23,8 +23,6 @@ export default {
             searchIndex = data.index;
         }
 
-        console.log(manifest.value);
-
         // make the manifest and search index available to other components by injection
         provide('manifest', manifest);
         provide('searchWorker', searchWorker);
