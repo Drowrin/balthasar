@@ -1,7 +1,9 @@
 <template>
-    <Grid>
-        <EntityBrief v-for="result in results" :key="result" :d="result.item" />
-    </Grid>
+    <FastGrid>
+        <GridItem v-for="result in results" :key="result">
+            <EntityBrief :d="result.item" />
+        </GridItem>
+    </FastGrid>
 </template>
 
 <script>
