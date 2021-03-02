@@ -9,6 +9,10 @@ body {
     background-color: #121212;
 }
 
+app {
+    padding: 0 !important;
+}
+
 tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
@@ -41,7 +45,6 @@ input {
 #content {
     margin-left: 250px;
     margin-bottom: 0px;
-    padding: 0px 10px;
     min-height: 100vh;
 }
 
@@ -61,12 +64,4 @@ a:visited {
 
 a:hover {
     color: #ff9800 !important;
-}
-
-.popover {
-    position: absolute;
-    width: 400px;
-    z-index: 1000;
-    pointer-events: none;
-    overflow: hidden;
 }

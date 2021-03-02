@@ -1,22 +1,13 @@
 <template>
-    <div v-if="results" class="row grid" style="margin-bottom: 0px !important">
-        <EntityBrief
-            class="col s12 l6 xl4 grid-item"
-            v-for="result in results"
-            :key="result"
-            :d="result.item"
-        />
-    </div>
-    <div v-else>no results</div>
+    <FastGrid>
+        <GridItem v-for="result in results" :key="result">
+            <EntityBrief :d="result.item" />
+        </GridItem>
+    </FastGrid>
 </template>
 
 <script>
 import { inject, ref, watch } from 'vue';
-import Masonry from 'masonry-layout';
-import imagesLoaded from 'imagesloaded';
-
-var msnry;
-var reloadMsnry = true;
 
 export default {
     setup() {
@@ -32,8 +23,6 @@ export default {
         function getResults(q) {
             if (q) searchWorker.postMessage(q);
             else results.value = [];
-
-            reloadMsnry = true;
         }
 
         getResults(searchTerm.value);
@@ -41,28 +30,6 @@ export default {
         watch(() => searchTerm.value, getResults);
 
         return { results };
-    },
-    mounted() {
-        msnry = new Masonry('.grid', {
-            percentPosition: true,
-            transitionDuration: 0,
-        });
-
-        const nextTick = this.$nextTick;
-    },
-    updated() {
-        if (reloadMsnry) {
-            msnry.reloadItems();
-            msnry.layout();
-
-            imagesLoaded('.grid', function () {
-                console.log('images loaded');
-                msnry.reloadItems();
-                msnry.layout();
-            });
-
-            reloadMsnry = false;
-        }
     },
 };
 </script>

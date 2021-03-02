@@ -45,7 +45,7 @@ export default {
                         {
                             name: 'preventOverflow',
                             options: {
-                                padding: 40,
+                                padding: 20,
                                 boundary: document.querySelector('#content'),
                             },
                         },
