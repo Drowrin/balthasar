@@ -5,7 +5,6 @@
 <script>
 import { provide, ref } from 'vue';
 import axios from 'axios';
-import Fuse from 'fuse.js';
 
 export default {
     async setup() {

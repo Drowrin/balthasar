@@ -1,7 +1,12 @@
 <template>
-    <div v-if="results" class="row grid" style="margin-bottom: 0px !important">
+    <div
+        ref="grid"
+        v-if="results"
+        style="margin-bottom: 0px !important; padding-top: 10px !important"
+    >
+        <div class="grid-sizer" :style="gridSize" />
         <EntityBrief
-            class="col s12 l6 xl4 grid-item"
+            :style="gridSize + `padding-right: 10px; padding-left: 10px;`"
             v-for="result in results"
             :key="result"
             :d="result.item"
@@ -11,7 +16,7 @@
 </template>
 
 <script>
-import { inject, ref, watch } from 'vue';
+import { inject, nextTick, onMounted, onUpdated, ref, watch } from 'vue';
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 
@@ -40,29 +45,56 @@ export default {
 
         watch(() => searchTerm.value, getResults);
 
-        return { results };
-    },
-    mounted() {
-        msnry = new Masonry('.grid', {
-            percentPosition: true,
-            transitionDuration: 0,
-        });
+        const gridSize = ref('');
+        const grid = ref(null);
 
-        const nextTick = this.$nextTick;
-    },
-    updated() {
-        if (reloadMsnry) {
+        function updateMsnry() {
             msnry.reloadItems();
             msnry.layout();
+        }
 
-            imagesLoaded('.grid', function () {
-                console.log('images loaded');
-                msnry.reloadItems();
-                msnry.layout();
+        var lastCount = 0;
+
+        function updateWidth() {
+            var w = grid.value.clientWidth;
+
+            var count = Math.max(1, Math.floor(w / 450));
+
+            if (lastCount != count) {
+                gridSize.value = `width: ${100 / count}%;`;
+                lastCount = count;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        updateMsnry();
+                        imagesLoaded(grid.value, updateMsnry);
+                    });
+                });
+            }
+        }
+
+        var loaded = false;
+
+        onMounted(function () {
+            msnry = new Masonry(grid.value, {
+                columnWidth: '.grid-sizer',
+                percentPosition: true,
+                transitionDuration: 0,
             });
 
-            reloadMsnry = false;
-        }
+            window.onresize = updateWidth;
+
+            setTimeout(updateWidth, 25);
+        });
+
+        onUpdated(function () {
+            if (reloadMsnry) {
+                updateMsnry();
+                imagesLoaded(grid.value, updateMsnry);
+                reloadMsnry = false;
+            }
+        });
+
+        return { results, gridSize, grid };
     },
 };
 </script>

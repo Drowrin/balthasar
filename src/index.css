@@ -9,6 +9,10 @@ body {
     background-color: #121212;
 }
 
+app {
+    padding: 0 !important;
+}
+
 tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
