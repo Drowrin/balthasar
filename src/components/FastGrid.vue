@@ -57,17 +57,19 @@ export default {
                 grid.value.style.height = `${this.maxheight}px`;
             }
             pad() {
-                this.heights.map((h, id) => {
-                    if (h < this.maxheight && h > 0) {
-                        const pad = document.createElement('div');
-                        pad.className = 'grid-pad';
-                        pad.style.height = `${this.maxheight - h - 5}px`;
-                        pad.style.width = `${100 / this.cols}%`;
-                        pad.style.order = id + 1;
-                        pad.style.msFlexOrder = id + 1;
-                        grid.value.appendChild(pad);
-                    }
-                });
+                if (this.heights.length > 1) {
+                    this.heights.map((h, id) => {
+                        if (h < this.maxheight && h > 0) {
+                            const pad = document.createElement('div');
+                            pad.className = 'grid-pad';
+                            pad.style.height = `${this.maxheight - h - 5}px`;
+                            pad.style.width = `${100 / this.cols}%`;
+                            pad.style.order = id + 1;
+                            pad.style.msFlexOrder = id + 1;
+                            grid.value.appendChild(pad);
+                        }
+                    });
+                }
             }
         }
 

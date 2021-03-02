@@ -9,6 +9,7 @@
     padding: 5px;
     margin: 0;
     width: 100%;
+    order: 1;
 }
 .grid-item > * {
     margin: 0;
