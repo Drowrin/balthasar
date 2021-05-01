@@ -13,63 +13,27 @@
             />
         </form>
     </div>
-    <div id="content" class="grey darken-4" @mousemove="mouseMove">
-        <Suspense>
-            <template #default>
-                <RouterContent />
-            </template>
-            <template #fallback>
-                <div class="valign-wrapper" style="height: 100vh">
-                    <div class="container">
-                        <div class="progress grey darken-4">
-                            <div class="indeterminate orange" />
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </Suspense>
+    <div id="content" class="grey darken-4">
+        <router-view :key="$route.fullPath" />
     </div>
 </template>
 
 <script>
-import { provide, ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import RouterContent from './RouterContent.vue';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import tippy from 'tippy.js';
 
 export default {
     name: 'App',
-    components: {
-        RouterContent,
-    },
     setup() {
         const router = useRouter();
-        const route = useRoute();
+        const store = useStore();
 
-        const searchInput = ref('');
-        const searchTerm = ref('');
-        provide('searchTerm', searchTerm);
-
-        // update search bar text with query string once it loads
-        watch(
-            () => route.query,
-            (query) => {
-                if (query.q) {
-                    searchInput.value = query.q;
-                    searchTerm.value = query.q;
-                }
-            }
-        );
-
-        /**
-         * Called by submitting the search bar.
-         */
-        function search() {
-            if (searchInput.value) {
-                searchTerm.value = searchInput.value;
-                // switch router to the search component and pass the search term as a query
-                router.push(`/search?q=${searchTerm.value}`);
-            }
-        }
+        const searchInput = computed({
+            get: () => store.state.searchTerm,
+            set: (val) => store.commit('searchTerm', val),
+        });
 
         var timer;
         const keydown = function () {
@@ -78,21 +42,43 @@ export default {
 
         const keyup = function () {
             clearTimeout(timer);
-            timer = setTimeout(() => (searchTerm.value = searchInput.value), 150);
+            timer = setTimeout(() => store.dispatch('search'), 150);
         };
 
-        const top = ref(0);
-        const left = ref(0);
+        /**
+         * Called by submitting the search bar.
+         * Switch router to the search component and pass the search term as a query.
+         */
+        function search() {
+            clearTimeout(timer);
+            router.push({ path: '/search', query: { q: searchInput.value } });
+        }
 
-        const mouseMove = function (event) {
-            left.value = event.clientX;
-            top.value = event.clientY;
-        };
+        store.dispatch('loadData');
 
-        provide('mouseLeft', left);
-        provide('mouseTop', top);
+        onMounted(() => {
+            tippy.setDefaultProps({
+                allowHTML: true,
 
-        return { search, searchInput, keydown, keyup, mouseMove };
+                duration: 150,
+                animation: 'shift-away-extreme',
+
+                placement: 'bottom',
+                popperOptions: {
+                    modifiers: [
+                        {
+                            name: 'preventOverflow',
+                            options: {
+                                padding: 20,
+                                boundary: document.querySelector('#content'),
+                            },
+                        },
+                    ],
+                },
+            });
+        });
+
+        return { search, searchInput, keydown, keyup };
     },
 };
 </script>

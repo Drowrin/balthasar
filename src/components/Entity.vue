@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { inject } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     props: {
@@ -13,12 +13,9 @@ export default {
         },
     },
     setup(props) {
-        const manifest = inject('manifest');
-        const d = manifest.value[props.id];
-
-        console.log(manifest.value);
-        console.log(d);
-
+        const store = useStore();
+        const manifest = store.state.manifest;
+        const d = manifest[props.id];
         return { manifest, d };
     },
 };

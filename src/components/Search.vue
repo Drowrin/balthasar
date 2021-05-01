@@ -7,29 +7,20 @@
 </template>
 
 <script>
-import { inject, ref, watch } from 'vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
 export default {
     setup() {
-        const searchTerm = inject('searchTerm');
-        const searchWorker = inject('searchWorker');
+        const store = useStore();
+        const route = useRoute();
 
-        const results = ref([]);
+        store.commit('searchTerm', route.query.q);
 
-        searchWorker.onmessage = function (e) {
-            results.value = e.data;
-        };
+        store.dispatch('search');
 
-        function getResults(q) {
-            if (q) searchWorker.postMessage(q);
-            else results.value = [];
-        }
-
-        getResults(searchTerm.value);
-
-        watch(() => searchTerm.value, getResults);
-
-        return { results };
+        return { results: computed(() => store.state.searchResults) };
     },
 };
 </script>

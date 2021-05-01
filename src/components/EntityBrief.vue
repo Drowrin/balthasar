@@ -65,11 +65,11 @@
 
             <p class="card-p" v-if="d.tool">{{ d.tool.proficiency }}</p>
 
-            <p class="card-p" v-if="d.description">{{ d.description }}</p>
-
-            <p v-if="d.property && !d.description">
-                {{ d.property.description }}
-            </p>
+            <Markdown
+                class="card-p"
+                v-if="d.description || d.property"
+                :source="d.description?.rendered || d.property.description.rendered"
+            />
         </div>
     </div>
 </template>
