@@ -5,15 +5,12 @@ var lastSearch;
 
 onmessage = function (e) {
     if (e.data.fuse !== undefined) {
-        fuse = new Fuse(
-            JSON.parse(e.data.fuse.values),
-            e.data.fuse.options,
-            Fuse.parseIndex(JSON.parse(e.data.fuse.index))
-        );
+        let data = JSON.parse(e.data.fuse);
+        fuse = new Fuse(data.values, data.options, Fuse.parseIndex(data.index));
         console.log('Search Worker loaded successfuly!');
 
         if (lastSearch) {
-            postMessage(fuse.search(e.data));
+            postMessage(fuse.search(lastSearch));
         }
     } else if (e.data.reset) {
         lastSearch = undefined;

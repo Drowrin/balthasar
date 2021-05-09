@@ -13,6 +13,7 @@ const store = new Store({
         index: null,
         versionHash: null,
         entityCount: null,
+        searchOptions: null,
 
         loadingData: false,
 
@@ -20,11 +21,13 @@ const store = new Store({
         searchResults: [],
     },
     mutations: {
-        data(state, { manifest, index, hash, length }) {
+        data(state, { manifest, index, hash, options }) {
             state.manifest = manifest;
             state.index = index;
             state.versionHash = hash;
-            state.entityCount = length;
+            state.searchOptions = options;
+
+            state.entityCount = Object.keys(manifest).length;
 
             state.loadingData = false;
         },
@@ -85,19 +88,12 @@ const store = new Store({
         },
 
         prime({ state }) {
-            const options = {
-                threshold: 0.55,
-                includeMatches: true,
-                includeScore: true,
-                useExtendedSearch: true,
-            };
-
             searchWorker.postMessage({
-                fuse: {
-                    values: JSON.stringify(Object.values(state.manifest)),
-                    options: options,
-                    index: JSON.stringify(state.index),
-                },
+                fuse: JSON.stringify({
+                    values: Object.values(state.manifest),
+                    options: state.options,
+                    index: state.index,
+                }),
             });
         },
 
