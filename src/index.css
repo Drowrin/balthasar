@@ -46,9 +46,11 @@ input {
 }
 
 #content {
-    margin-left: 250px;
+    padding-left: 250px;
     margin-bottom: 0px;
     min-height: 100vh;
+    min-width: 100%;
+    position: absolute;
 }
 
 .card-p {

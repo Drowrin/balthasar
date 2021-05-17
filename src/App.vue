@@ -1,4 +1,7 @@
 <template>
+    <div id="content" class="grey darken-4">
+        <router-view :key="$route.fullPath" />
+    </div>
     <div id="sidebar" class="row z-depth-2">
         <router-link to="/">
             <i class="medium hover-text material-icons center-align col s12">home</i>
@@ -12,9 +15,6 @@
                 @keyup="keyup"
             />
         </form>
-    </div>
-    <div id="content" class="grey darken-4">
-        <router-view :key="$route.fullPath" />
     </div>
 </template>
 
