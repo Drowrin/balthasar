@@ -10,6 +10,7 @@ searchWorker.onmessage = function (e) {
 const store = new Store({
     state: {
         manifest: null,
+        rawManifest: null,
         index: null,
         versionHash: null,
         entityCount: null,
@@ -22,7 +23,8 @@ const store = new Store({
     },
     mutations: {
         data(state, { manifest, index, hash, options }) {
-            state.manifest = manifest;
+            state.rawManifest = manifest;
+            state.manifest = Object.fromEntries(manifest.map((e) => [e.id, e]));
             state.index = index;
             state.versionHash = hash;
             state.searchOptions = options;
@@ -90,7 +92,7 @@ const store = new Store({
         prime({ state }) {
             searchWorker.postMessage({
                 fuse: JSON.stringify({
-                    values: Object.values(state.manifest),
+                    values: state.rawManifest,
                     options: state.options,
                     index: state.index,
                 }),
