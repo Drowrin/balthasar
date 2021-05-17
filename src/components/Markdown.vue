@@ -47,6 +47,8 @@ export default {
                 if (entity !== undefined) {
                     n.setAttribute('data-tippy-content', entity.description.rendered);
 
+                    n.classList.add('.markdown-tippy');
+
                     n.addEventListener('click', (event) => {
                         event.preventDefault();
 
@@ -59,7 +61,7 @@ export default {
                 }
             });
 
-            tippy(`#${uid} .markdown-entity-link`);
+            tippy(`#${uid} .markdown-tippy`);
         });
 
         return {
