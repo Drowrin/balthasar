@@ -1,5 +1,6 @@
 <template>
     <div style="margin: 20px">
+        <h3>{{ d.name }}</h3>
         <Markdown
             v-if="d.type === 'article'"
             :source="d.article.rendered"
