@@ -1,5 +1,12 @@
 <template>
-    {{ JSON.stringify(d, null, 2) }}
+    <div style="margin: 20px">
+        <Markdown
+            v-if="d.type === 'article'"
+            :source="d.article.rendered"
+            style="max-width: 1000px; margin: auto"
+        />
+        <div v-else>{{ JSON.stringify(d, null, 2) }}</div>
+    </div>
 </template>
 
 <script>

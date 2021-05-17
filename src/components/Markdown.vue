@@ -10,6 +10,14 @@
     background: #343434;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
+
+ul > li {
+    list-style-type: disc !important;
+}
+
+ul {
+    padding-left: 40px !important;
+}
 </style>
 
 <script>
@@ -35,17 +43,20 @@ export default {
             nodes.forEach((n) => {
                 let id = n.getAttribute('data-entity-id');
                 let entity = store.state.manifest[id];
-                n.setAttribute('data-tippy-content', entity.description.rendered);
 
-                n.addEventListener('click', (event) => {
-                    event.preventDefault();
+                if (entity !== undefined) {
+                    n.setAttribute('data-tippy-content', entity.description.rendered);
 
-                    const { altKey, ctrlKey, metaKey, shiftKey, button } = event;
-                    if (metaKey || altKey || ctrlKey || shiftKey) return;
-                    if (button !== undefined && button !== 0) return;
+                    n.addEventListener('click', (event) => {
+                        event.preventDefault();
 
-                    router.push(new URL(n.href).pathname);
-                });
+                        const { altKey, ctrlKey, metaKey, shiftKey, button } = event;
+                        if (metaKey || altKey || ctrlKey || shiftKey) return;
+                        if (button !== undefined && button !== 0) return;
+
+                        router.push(new URL(n.href).pathname);
+                    });
+                }
             });
 
             tippy(`#${uid} .markdown-entity-link`);
