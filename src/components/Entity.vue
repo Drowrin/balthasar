@@ -1,12 +1,10 @@
 <template>
     <div style="margin: 20px">
-        <h3>{{ d.name }}</h3>
-        <Markdown
-            v-if="d.type === 'article'"
-            :source="d.article.rendered"
-            style="max-width: 1000px; margin: auto"
-        />
-        <div v-else>{{ JSON.stringify(d, null, 2) }}</div>
+        <div style="margin: auto; max-width: 700px">
+            <h3>{{ d.name }}</h3>
+            <Markdown v-if="d.type === 'article'" :source="d.article.rendered" />
+            <div v-else>{{ JSON.stringify(d, null, 2) }}</div>
+        </div>
     </div>
 </template>
 
