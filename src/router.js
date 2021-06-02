@@ -2,7 +2,6 @@ import { createWebHistory, createRouter } from 'vue-router';
 import store from './store';
 
 const Loading = () => import('./components/Loading.vue');
-const NotFound = () => import('./components/NotFound.vue');
 const Search = () => import('./components/Search.vue');
 const EntityPage = () => import('./components/Entity.vue');
 
@@ -30,12 +29,6 @@ const routes = [
         name: 'Search',
         component: Search,
         beforeEnter: [waitForManifest],
-    },
-
-    {
-        path: '/notfound',
-        name: 'NotFound',
-        component: NotFound,
     },
 
     {
