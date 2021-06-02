@@ -62,7 +62,6 @@ export default {
     setup() {
         const store = useStore();
 
-        // TODO: heartbeat system to test connection occasionally.
         let ws = Api.webSocket();
 
         ws.onmessage = function (event) {
