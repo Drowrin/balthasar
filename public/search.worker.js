@@ -1,4 +1,4 @@
-importScripts('https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js');
+importScripts('https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js');
 
 var fuse;
 var lastSearch;

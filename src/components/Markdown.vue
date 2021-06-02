@@ -3,20 +3,15 @@
 </template>
 
 <style>
-.markdown-entity-link {
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid #292929;
-    background: #343434;
-    box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+h3,
+h4,
+h5,
+h6 {
+    margin: 20px 0px 0px 0px;
 }
 
-ul > li {
-    list-style-type: disc !important;
-}
-
-ul {
-    padding-left: 40px !important;
+p {
+    margin: 0px 0px 10px 0px;
 }
 </style>
 
@@ -39,7 +34,7 @@ export default {
         const uid = `link${getCurrentInstance().uid}`;
 
         onMounted(() => {
-            let nodes = wrapper.value.querySelectorAll('.markdown-entity-link');
+            let nodes = wrapper.value.querySelectorAll('.entity-link');
             nodes.forEach((n) => {
                 let id = n.getAttribute('data-entity-id');
                 let entity = store.state.manifest[id];
@@ -48,17 +43,20 @@ export default {
                     n.setAttribute('data-tippy-content', entity.description.rendered);
 
                     n.classList.add('markdown-tippy');
-
-                    n.addEventListener('click', (event) => {
-                        event.preventDefault();
-
-                        const { altKey, ctrlKey, metaKey, shiftKey, button } = event;
-                        if (metaKey || altKey || ctrlKey || shiftKey) return;
-                        if (button !== undefined && button !== 0) return;
-
-                        router.push(new URL(n.href).pathname);
-                    });
                 }
+
+                n.classList.add('card-block');
+                n.style.marginRight = 0; // Override .card-block margin so it fits better in text blocks
+
+                n.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const { altKey, ctrlKey, metaKey, shiftKey, button } = event;
+                    if (metaKey || altKey || ctrlKey || shiftKey) return;
+                    if (button !== undefined && button !== 0) return;
+
+                    router.push(new URL(n.href).pathname);
+                });
             });
 
             tippy(`#${uid} .markdown-tippy`);

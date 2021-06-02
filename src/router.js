@@ -4,7 +4,7 @@ import store from './store';
 const Loading = () => import('./components/Loading.vue');
 const NotFound = () => import('./components/NotFound.vue');
 const Search = () => import('./components/Search.vue');
-const Entity = () => import('./components/Entity.vue');
+const EntityPage = () => import('./components/Entity.vue');
 
 function waitForManifest(to) {
     if (!store.state.manifest) {
@@ -13,22 +13,7 @@ function waitForManifest(to) {
     }
 }
 
-function checkExists(to) {
-    let id = to.params.id.join('.');
-    if (`${id}.*` in store.state.manifest) {
-        return { path: to.path + '/*', query: to.query, hash: to.hash };
-    }
-    if (!(id in store.state.manifest)) {
-        return '/notfound';
-    }
-}
-
 const routes = [
-    {
-        path: '/',
-        redirect: '/home',
-    },
-
     {
         path: '/loading',
         name: 'Loading',
@@ -54,15 +39,25 @@ const routes = [
     },
 
     {
+        path: '/',
+        name: 'Home',
+        component: EntityPage,
+        props: () => {
+            return { id: 'article.home' };
+        },
+        beforeEnter: [waitForManifest],
+    },
+
+    {
         path: '/:id+',
         name: 'Entity',
-        component: Entity,
+        component: EntityPage,
         props: (route) => {
             return {
                 id: route.params.id.join('.'),
             };
         },
-        beforeEnter: [waitForManifest, checkExists],
+        beforeEnter: [waitForManifest],
     },
 ];
 

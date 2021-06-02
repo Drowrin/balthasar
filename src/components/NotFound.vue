@@ -1,3 +1,3 @@
 <template>
-    <div>Not found!</div>
+    <div class="text-emphasis">Not found!</div>
 </template>

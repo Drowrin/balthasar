@@ -14,7 +14,7 @@ const store = new Store({
         index: null,
         versionHash: null,
         entityCount: null,
-        searchOptions: null,
+        options: null,
 
         loadingData: false,
 
@@ -27,7 +27,7 @@ const store = new Store({
             state.manifest = Object.fromEntries(manifest.map((e) => [e.id, e]));
             state.index = index;
             state.versionHash = hash;
-            state.searchOptions = options;
+            state.options = options;
 
             state.entityCount = Object.keys(manifest).length;
 
@@ -93,7 +93,7 @@ const store = new Store({
             searchWorker.postMessage({
                 fuse: JSON.stringify({
                     values: state.rawManifest,
-                    options: state.options,
+                    options: state.options.searchOptions,
                     index: state.index,
                 }),
             });

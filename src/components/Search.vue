@@ -1,9 +1,9 @@
 <template>
-    <FastGrid>
+    <Grid :offset="20" :gutter="10" style="padding: 10px">
         <GridItem v-for="result in results" :key="result">
-            <EntityBrief :d="result.item" />
+            <Entity :id="result.item.id" card categories />
         </GridItem>
-    </FastGrid>
+    </Grid>
 </template>
 
 <script>
@@ -11,7 +11,11 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
+import Grid from './Grid.vue';
+import GridItem from './GridItem.vue';
+
 export default {
+    components: { Grid, GridItem },
     setup() {
         const store = useStore();
         const route = useRoute();
@@ -20,7 +24,7 @@ export default {
 
         store.dispatch('search');
 
-        return { results: computed(() => store.state.searchResults) };
+        return { results: computed(() => store.state.searchResults.slice(0, 50)) };
     },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <router-link :id="id" :to="`/${d.id.replace('.', '/')}`">
-        <slot />
+    <router-link :id="id" :to="`/${entity.id.replaceAll('.', '/')}`">
+        <slot>{{ entity.name }}</slot>
     </router-link>
 </template>
 
@@ -10,14 +10,14 @@ import tippy from 'tippy.js';
 
 export default {
     props: {
-        d: {
+        entity: {
             type: Object,
-            validator: (d) => d.id !== undefined,
+            validator: (entity) => entity.id !== undefined,
             required: true,
         },
         tooltip: {
             type: Boolean,
-            default: true,
+            default: false,
         },
     },
     setup(props) {
@@ -26,9 +26,8 @@ export default {
         onMounted(() => {
             if (props.tooltip) {
                 tippy('#' + id, {
-                    content: props.d.description.rendered,
+                    content: props.entity.description.rendered,
                     ignoreAttributes: true,
-                    interactive: true,
                 });
             }
         });

@@ -1,61 +1,62 @@
 <template>
-    <div id="content" class="grey darken-4">
-        <router-view :key="$route.fullPath" />
-    </div>
-    <div id="sidebar" class="row z-depth-2">
-        <router-link to="/">
-            <i class="medium hover-text material-icons center-align col s12">home</i>
-        </router-link>
-        <form @submit.prevent="search" class="col s12">
-            <input
-                class="col s12"
-                v-model="searchInput"
-                placeholder="search"
-                @keydown="keydown"
-                @keyup="keyup"
-            />
-        </form>
-    </div>
+    <Sidebar />
+    <ScrollPanel id="scrollpanel">
+        <div id="content">
+            <router-view :key="$route.fullPath" />
+        </div>
+    </ScrollPanel>
 </template>
 
+<style>
+#scrollpanel {
+    margin-left: 250px;
+    margin-bottom: 0px;
+    height: 100vh;
+}
+
+#content {
+    min-height: 100vh;
+    background-color: var(--surface-0);
+    border-right: 1px ridge var(--surface-400);
+}
+
+.p-scrollpanel {
+    background-color: var(--surface-50);
+}
+
+.p-scrollpanel-content {
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+</style>
+
+<style>
+.tippy-content p {
+    margin: 0px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.tippy-box {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: var(--surface-300);
+}
+</style>
+
 <script>
-import { computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { onMounted } from 'vue';
 import tippy from 'tippy.js';
+
+import ScrollPanel from 'primevue/scrollpanel';
+
+import Sidebar from './components/Sidebar.vue';
 
 export default {
     name: 'App',
+    components: { Sidebar, ScrollPanel },
     setup() {
-        const router = useRouter();
-        const store = useStore();
-
-        const searchInput = computed({
-            get: () => store.state.searchTerm,
-            set: (val) => store.commit('searchTerm', val),
-        });
-
-        var timer;
-        const keydown = function () {
-            clearTimeout(timer);
-        };
-
-        const keyup = function () {
-            clearTimeout(timer);
-            timer = setTimeout(() => store.dispatch('search'), 150);
-        };
-
-        /**
-         * Called by submitting the search bar.
-         * Switch router to the search component and pass the search term as a query.
-         */
-        function search() {
-            clearTimeout(timer);
-            router.push({ path: '/search', query: { q: searchInput.value } });
-        }
-
-        store.dispatch('loadData');
-
         onMounted(() => {
             tippy.setDefaultProps({
                 allowHTML: true,
@@ -77,8 +78,6 @@ export default {
                 },
             });
         });
-
-        return { search, searchInput, keydown, keyup };
     },
 };
 </script>
