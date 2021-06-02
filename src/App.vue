@@ -2,7 +2,7 @@
     <Sidebar />
     <ScrollPanel id="scrollpanel">
         <div id="content">
-            <router-view :key="$route.fullPath" />
+            <router-view :key="$route.fullPath + hash" />
         </div>
     </ScrollPanel>
 </template>
@@ -46,7 +46,8 @@
 </style>
 
 <script>
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
 import ScrollPanel from 'primevue/scrollpanel';
@@ -57,6 +58,8 @@ export default {
     name: 'App',
     components: { Sidebar, ScrollPanel },
     setup() {
+        const store = useStore();
+
         onMounted(() => {
             tippy.setDefaultProps({
                 allowHTML: true,
@@ -78,6 +81,8 @@ export default {
                 },
             });
         });
+
+        return { hash: computed(() => store.state.versionHash) };
     },
 };
 </script>
