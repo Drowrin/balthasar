@@ -1,15 +1,18 @@
 import axios from 'axios';
 
-const Api = {
-    ROOT: 'http://localhost:3001',
+export const DOMAIN = 'localhost';
+export const PORT = 3001;
+export const WSPORT = 3002;
+export const ROOT = `http://${DOMAIN}:${PORT}`;
 
-    async getHash() {
-        return (await axios.get(Api.ROOT + '/hash')).data;
-    },
+export async function getHash() {
+    return (await axios.get(ROOT + '/hash')).data;
+}
 
-    async getData() {
-        return (await axios.get(Api.ROOT)).data;
-    },
-};
+export async function getData() {
+    return (await axios.get(ROOT)).data;
+}
 
-export default Api;
+export function webSocket() {
+    return new WebSocket(`ws://${DOMAIN}:${WSPORT}`);
+}

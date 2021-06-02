@@ -46,7 +46,7 @@
 </style>
 
 <script>
-import { onMounted, computed } from 'vue';
+import { onMounted, onUnmounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
@@ -54,11 +54,26 @@ import ScrollPanel from 'primevue/scrollpanel';
 
 import Sidebar from './components/Sidebar.vue';
 
+import * as Api from './api';
+
 export default {
     name: 'App',
     components: { Sidebar, ScrollPanel },
     setup() {
         const store = useStore();
+
+        // TODO: heartbeat system to test connection occasionally.
+        let ws = Api.webSocket();
+
+        ws.onmessage = function (event) {
+            let msg = JSON.parse(event.data);
+
+            console.log(`Hash update received: ${msg.hash}`);
+
+            if (msg.hash != store.state.versionHash) store.dispatch('refreshData');
+        };
+
+        onUnmounted(() => ws.close());
 
         onMounted(() => {
             tippy.setDefaultProps({

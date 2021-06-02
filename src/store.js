@@ -1,5 +1,5 @@
 import { Store } from 'vuex';
-import Api from './api';
+import * as Api from './api';
 
 const searchWorker = new Worker('/search.worker.js');
 
