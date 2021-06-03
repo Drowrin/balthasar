@@ -46,7 +46,7 @@
 </style>
 
 <script>
-import { onMounted, onUnmounted, computed } from 'vue';
+import { onMounted, onUnmounted, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
@@ -63,6 +63,23 @@ export default {
         const store = useStore();
 
         let ws = Api.webSocket();
+        console.log(`Attempting to connect to WebSocket at ${Api.WSROOT}`);
+
+        const stopWatching = watch(
+            () => ws.readyState,
+            (readyState) => {
+                if (readyState == 1) {
+                    console.log(`Successfully connected to WebSocket at ${Api.WSROOT}`);
+                    stopWatching();
+                }
+            }
+        );
+
+        ws.onerror = function (event) {
+            console.log('Could not establish WebSocket communication with Casper:');
+            console.error(event);
+            stopWatching();
+        };
 
         ws.onmessage = function (event) {
             let msg = JSON.parse(event.data);
