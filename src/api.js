@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-export const DOMAIN = 'localhost';
-export const PORT = 3001;
-export const WSPORT = 3002;
+export const DOMAIN = import.meta.env.VITE_CASPER_DOMAIN;
+export const PORT = import.meta.env.VITE_CASPER_PORT;
 export const ROOT = `http://${DOMAIN}:${PORT}`;
+export const WSPORT = import.meta.env.VITE_CASPER_WS_PORT;
+export const WSROOT = `ws://${DOMAIN}:${WSPORT}`;
 
 export async function getHash() {
     return (await axios.get(ROOT + '/hash')).data;
@@ -14,5 +15,5 @@ export async function getData() {
 }
 
 export function webSocket() {
-    return new WebSocket(`ws://${DOMAIN}:${WSPORT}`);
+    return new WebSocket(WSROOT);
 }
