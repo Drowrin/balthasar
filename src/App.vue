@@ -63,13 +63,13 @@ export default {
         const store = useStore();
 
         let ws = Api.webSocket();
-        console.log(`Attempting to connect to WebSocket at ${Api.WSROOT}`);
+        console.log(`Attempting to connect to WebSocket at ${Api.WS}`);
 
         const stopWatching = watch(
             () => ws.readyState,
             (readyState) => {
                 if (readyState == 1) {
-                    console.log(`Successfully connected to WebSocket at ${Api.WSROOT}`);
+                    console.log(`Successfully connected to WebSocket at ${Api.WS}`);
                     stopWatching();
                 }
             }
