@@ -2,7 +2,10 @@
     <div>
         <Fieldset legend="Core Traits" v-if="hasCoreTraits">
             <Grid :gutter="10" compact>
-                <GridItem>
+                <GridItem
+                    v-if="!!lineage.appearance"
+                    :class="passIf(lineage.appearance !== delta?.appearance)"
+                >
                     <Card>
                         <template #title>Appearance</template>
                         <template #content>
@@ -10,7 +13,12 @@
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem v-if="!!lineage.size || !!lineage.stature">
+                <GridItem
+                    v-if="!!lineage.size || !!lineage.stature"
+                    :class="
+                        passIf(lineage.size !== delta?.size || lineage.stature !== delta?.stature)
+                    "
+                >
                     <Card>
                         <template #title>Size</template>
                         <template #content>
@@ -34,7 +42,10 @@
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem v-if="!!lineage.languages">
+                <GridItem
+                    v-if="!!lineage.languages"
+                    :class="passIf(lineage.languages !== delta?.languages)"
+                >
                     <Card>
                         <template #title>Languages</template>
                         <template #content>
@@ -49,7 +60,7 @@
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem v-if="!!lineage.age">
+                <GridItem v-if="!!lineage.age" :class="passIf(lineage.age !== delta?.age)">
                     <Card>
                         <template #title>Age</template>
                         <template #content>
@@ -67,7 +78,11 @@
 
         <Fieldset legend="Minor Traits" v-if="hasMinorTraits">
             <Grid :gutter="10" compact>
-                <GridItem v-for="trait in lineage.minorTraits" :key="trait">
+                <GridItem
+                    v-for="trait in lineage.minorTraits"
+                    :key="trait"
+                    :class="passIf(!delta?.minorTraits?.map((t) => t.id).includes(trait.id))"
+                >
                     <Entity :id="trait.id" card />
                 </GridItem>
             </Grid>
@@ -75,7 +90,11 @@
 
         <Fieldset legend="Major Traits" v-if="hasMajorTraits">
             <Grid :gutter="10" compact>
-                <GridItem v-for="trait in lineage.majorTraits" :key="trait">
+                <GridItem
+                    v-for="trait in lineage.majorTraits"
+                    :key="trait"
+                    :class="passIf(!delta?.majorTraits?.map((t) => t.id).includes(trait.id))"
+                >
                     <Entity :id="trait.id" card />
                 </GridItem>
             </Grid>
@@ -83,13 +102,27 @@
 
         <Fieldset legend="Heritage Traits" v-if="hasHeritageTraits">
             <Grid :gutter="10" compact>
-                <GridItem v-for="trait in lineage.heritageTraits" :key="trait">
+                <GridItem
+                    v-for="trait in lineage.heritageTraits"
+                    :key="trait"
+                    :class="passIf(!delta?.heritageTraits?.map((t) => t.id).includes(trait.id))"
+                >
                     <Entity :id="trait.id" card />
                 </GridItem>
             </Grid>
         </Fieldset>
     </div>
 </template>
+
+<style>
+.passthrough .p-card {
+    opacity: 0.72;
+    border: 1.5px dashed var(--surface-900);
+}
+.passthrough .p-card-title::before {
+    content: var(--origin-text);
+}
+</style>
 
 <script>
 import { computed } from 'vue';
@@ -110,6 +143,10 @@ export default {
         lineage: {
             type: Object,
             required: true,
+        },
+        delta: {
+            type: Object,
+            required: false,
         },
     },
     setup(props) {
@@ -132,7 +169,12 @@ export default {
             () => !!props.lineage.heritageTraits && props.lineage.heritageTraits.length > 0
         );
 
+        function passIf(b) {
+            return !!props.delta && b ? 'passthrough' : '';
+        }
+
         return {
+            passIf,
             hasCoreTraits,
             hasMinorTraits,
             hasMajorTraits,

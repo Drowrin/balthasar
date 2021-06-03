@@ -5,15 +5,20 @@
             <EntityLink tooltip class="card-block" :entity="entity.sublineage.of" />
 
             <div v-if="!card" style="float: right">
-                <!-- TODO: better wording? -->
-                <span style="padding: 7px">Sublineage Differences Only</span>
-                <InputSwitch v-model="displayFull" />
-                <span style="padding: 7px">Include Base Lineage</span>
+                <span style="float: left; padding: 7px">
+                    Include {{ entity.sublineage.of.name }} Traits
+                </span>
+                <InputSwitch v-model="displayFull" style="margin: 10px" />
             </div>
         </template>
     </EntityCard>
 
-    <LineageDetails v-if="!card" :lineage="lineage" />
+    <LineageDetails
+        v-if="!card"
+        :lineage="lineage"
+        :delta="entity.sublineage.delta"
+        :style="`--origin-text: 'From ${entity.sublineage.of.name}: ';`"
+    />
 </template>
 
 <script>
