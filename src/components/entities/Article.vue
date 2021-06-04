@@ -2,7 +2,11 @@
     <EntityCard :entity="entity" v-if="card" />
 
     <div v-else>
-        <EntityCard :entity="entity" :description="false" :style="style" />
+        <div :style="style">
+            <EntityCard :entity="entity" :description="false" />
+
+            <Divider />
+        </div>
 
         <div id="article-wrapper" ref="wrapper">
             <Card v-for="[n, d] in Object.entries(entity.article)" :key="n" class="article-card">
@@ -27,14 +31,14 @@
 }
 
 .article-card {
-    margin: 10px 0 0;
+    margin: 0 0 10px;
     height: fit-content;
     width: 100%;
 }
 
 @media (min-width: 1011px) {
     .article-card {
-        margin: 10px 5px 0;
+        margin: 0 5px 10px;
         width: 720px;
     }
 }
@@ -44,13 +48,14 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 import Card from 'primevue/card';
+import Divider from 'primevue/divider';
 import EntityCard from './parts/EntityCard.vue';
 import Markdown from '../Markdown.vue';
 import TitleRow from './parts/TitleRow.vue';
 
 export default {
     name: 'Article',
-    components: { EntityCard, Markdown, Card, TitleRow },
+    components: { EntityCard, Markdown, Card, TitleRow, Divider },
     props: {
         entity: {
             type: Object,
