@@ -1,50 +1,29 @@
 <template>
     <EntityCard :entity="entity" v-if="card" />
 
-    <div v-else>
-        <div :style="style">
-            <EntityCard :entity="entity" :description="false" class="header" />
+    <div v-else ref="wrapper" :style="style">
+        <EntityCard :entity="entity" :description="false" class="header" />
 
-            <Divider />
-        </div>
+        <Divider />
 
-        <div id="article-wrapper" ref="wrapper">
-            <Card v-for="[n, d] in Object.entries(entity.article)" :key="n" class="article-card">
-                <template #title>
-                    {{ n }}
-                </template>
-                <template #content>
-                    <Markdown :source="d.rendered" />
-                </template>
-            </Card>
-        </div>
+        <Grid :gutter="10" :cols="cols">
+            <GridItem v-for="[n, d] in Object.entries(entity.article)" :key="n">
+                <Card>
+                    <template #title>
+                        {{ n }}
+                    </template>
+                    <template #content>
+                        <Markdown :source="d.rendered" />
+                    </template>
+                </Card>
+            </GridItem>
+        </Grid>
     </div>
 </template>
 
 <style>
 .header .p-card-title {
     text-align: center;
-}
-
-#article-wrapper {
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.article-card {
-    margin: 0 0 10px;
-    height: fit-content;
-    width: 100%;
-}
-
-@media (min-width: 1011px) {
-    .article-card {
-        margin: 0 5px 10px;
-        width: 720px;
-    }
 }
 </style>
 
@@ -56,10 +35,12 @@ import Divider from 'primevue/divider';
 import EntityCard from './parts/EntityCard.vue';
 import Markdown from '../Markdown.vue';
 import TitleRow from './parts/TitleRow.vue';
+import Grid from '../Grid.vue';
+import GridItem from '../GridItem.vue';
 
 export default {
     name: 'Article',
-    components: { EntityCard, Markdown, Card, TitleRow, Divider },
+    components: { EntityCard, Markdown, Card, TitleRow, Divider, Grid, GridItem },
     props: {
         entity: {
             type: Object,
@@ -73,19 +54,23 @@ export default {
     setup(props) {
         let wrapper = ref(null);
         let style = ref('');
+        let cols = ref(1);
 
         function updateWidth() {
             if (wrapper.value !== null) {
-                let w = wrapper.value.clientWidth;
+                let w = wrapper.value.parentElement.clientWidth;
 
-                if (w <= 730) {
+                let extraWidth = Math.max(w - 720, 0);
+                let extraCols = Math.floor(extraWidth / 730);
+
+                if (extraWidth == 0) {
                     style.value = '';
                 } else {
-                    let cols = Math.floor(w / 730);
-                    let count = wrapper.value.querySelectorAll('.article-card').length;
-                    let mult = Math.min(count, cols);
+                    let possibleCols = extraCols + 1;
+                    let count = Object.entries(props.entity.article).length;
+                    cols.value = Math.max(Math.min(count, possibleCols), 1);
 
-                    style.value = `margin: auto; width: ${730 * mult - 10}px`;
+                    style.value = `margin: auto; width: ${730 * cols.value - 10}px`;
                 }
             }
         }
@@ -94,18 +79,18 @@ export default {
 
         onMounted(() => {
             if (!props.card) {
-                ro.observe(wrapper.value);
+                ro.observe(wrapper.value.parentElement);
                 updateWidth();
             }
         });
 
         onBeforeUnmount(() => {
             if (!props.card) {
-                ro.unobserve(wrapper.value);
+                ro.unobserve(wrapper.value.parentElement);
             }
         });
 
-        return { wrapper, style };
+        return { wrapper, style, cols };
     },
 };
 </script>
