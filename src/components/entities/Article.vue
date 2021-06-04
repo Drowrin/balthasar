@@ -1,23 +1,15 @@
 <template>
-    <EntityCard :entity="entity" v-if="card" />
+    <EntityCard :entity="entity" :description="card" />
 
-    <div v-else>
-        <Card class="page-header">
+    <div id="article-section" v-if="!card">
+        <Card v-for="[n, d] in Object.entries(entity.article)" :key="n" class="article-card">
             <template #title>
-                <TitleRow :entity="entity" />
+                {{ n }}
+            </template>
+            <template #content>
+                <Markdown :source="d.rendered" />
             </template>
         </Card>
-
-        <div id="article-section">
-            <Card v-for="[n, d] in Object.entries(entity.article)" :key="n" class="article-card">
-                <template #title>
-                    {{ n }}
-                </template>
-                <template #content>
-                    <Markdown :source="d.rendered" />
-                </template>
-            </Card>
-        </div>
     </div>
 </template>
 

@@ -24,7 +24,10 @@
             <Divider v-if="$slots.blocks && (entity.description || $slots.content)" />
 
             <slot name="content">
-                <Markdown :source="entity.description.rendered" v-if="entity.description" />
+                <Markdown
+                    :source="entity.description.rendered"
+                    v-if="description && entity.description"
+                />
             </slot>
         </template>
 
@@ -61,6 +64,10 @@ export default {
         categories: {
             type: Boolean,
             default: false,
+        },
+        description: {
+            type: Boolean,
+            default: true,
         },
     },
     setup(props) {
