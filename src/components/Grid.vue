@@ -70,15 +70,13 @@ export default {
         const gridWidth = ref(`calc(100% - ${props.offset})`);
 
         let lastWidth = 0;
-        let needUpdate = true;
 
         function updateWidth() {
             if (!!grid.value) {
                 let w = grid.value.clientWidth;
 
-                if (w != lastWidth || needUpdate) {
+                if (w != lastWidth) {
                     lastWidth = w;
-                    needUpdate = false;
 
                     let cols = Math.max(1, Math.floor(w / props.breakpoint));
                     let percentage = 100 / cols;
@@ -102,7 +100,6 @@ export default {
 
         onMounted(function () {
             ro.observe(grid.value);
-
             updateWidth();
         });
 
@@ -111,7 +108,6 @@ export default {
         });
 
         onUpdated(() => {
-            needUpdate = true;
             updateWidth();
         });
 
