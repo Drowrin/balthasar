@@ -29,7 +29,7 @@
 </style>
 
 <script>
-import { onMounted, onUpdated, onBeforeUnmount, ref } from 'vue';
+import { onMounted, onUpdated, onBeforeUnmount, ref, inject } from 'vue';
 
 export default {
     name: 'Grid',
@@ -66,17 +66,20 @@ export default {
         },
     },
     setup(props) {
+        const redrawMasonry = inject('redrawMasonry');
+
         const grid = ref(null);
         const gridWidth = ref(`calc(100% - ${props.offset})`);
 
-        let lastWidth = 0;
+        const lastWidth = ref(0);
+        const lastCols = ref(1);
 
         function updateWidth() {
             if (!!grid.value) {
                 let w = grid.value.clientWidth;
 
-                if (w != lastWidth) {
-                    lastWidth = w;
+                if (w != lastWidth.value) {
+                    lastWidth.value = w;
 
                     let cols = Math.max(1, Math.floor(w / props.breakpoint));
                     let percentage = 100 / cols;
@@ -91,6 +94,11 @@ export default {
                         items.forEach((i) => {
                             grid.value.appendChild(i);
                         });
+                    }
+
+                    if (lastCols.value != cols) {
+                        lastCols.value = cols;
+                        redrawMasonry();
                     }
                 }
             }
