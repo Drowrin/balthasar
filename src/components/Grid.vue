@@ -1,7 +1,7 @@
 <template>
     <div
         ref="grid"
-        class="fast-grid"
+        class="grid"
         :style="`--grid-width: ${gridWidth}; --grid-gutter: ${gutter}px`"
         v-masonry
         transition-duration="0s"
@@ -14,7 +14,7 @@
 </template>
 
 <style>
-.fast-grid {
+.grid {
     margin: 0px;
     padding: 0px;
     position: relative;
