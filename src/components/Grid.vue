@@ -72,7 +72,6 @@ export default {
         const gridWidth = ref(`calc(100% - ${props.offset})`);
 
         const lastWidth = ref(0);
-        const lastCols = ref(1);
         const needsUpdate = ref(false);
 
         function updateWidth() {
@@ -98,10 +97,7 @@ export default {
                         });
                     }
 
-                    if (lastCols.value != cols) {
-                        lastCols.value = cols;
-                        redrawMasonry();
-                    }
+                    redrawMasonry();
                 }
             }
         }
