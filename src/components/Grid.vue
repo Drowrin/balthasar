@@ -64,6 +64,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Force the grid to render a specific number of columns
+         * This overrides the breakpoint property
+         */
+        cols: {
+            type: Number,
+        },
     },
     setup(props) {
         const redrawMasonry = inject('redrawMasonry');
@@ -82,7 +89,7 @@ export default {
                     lastWidth.value = w;
                     needsUpdate.value = false;
 
-                    let cols = Math.max(1, Math.floor(w / props.breakpoint));
+                    let cols = props.cols || Math.max(1, Math.floor(w / props.breakpoint));
                     let percentage = 100 / cols;
                     let eachOffset = props.offset / cols;
                     let eachGutter = (props.gutter * (cols - 1)) / cols;
