@@ -3,7 +3,7 @@
 
     <div v-else>
         <div :style="style">
-            <EntityCard :entity="entity" :description="false" />
+            <EntityCard :entity="entity" :description="false" class="header" />
 
             <Divider />
         </div>
@@ -22,6 +22,10 @@
 </template>
 
 <style>
+.header .p-card-title {
+    text-align: center;
+}
+
 #article-wrapper {
     margin: auto;
     display: flex;
