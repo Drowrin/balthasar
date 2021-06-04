@@ -73,13 +73,15 @@ export default {
 
         const lastWidth = ref(0);
         const lastCols = ref(1);
+        const needsUpdate = ref(false);
 
         function updateWidth() {
             if (!!grid.value) {
                 let w = grid.value.clientWidth;
 
-                if (w != lastWidth.value) {
+                if (w != lastWidth.value || needsUpdate.value) {
                     lastWidth.value = w;
+                    needsUpdate.value = false;
 
                     let cols = Math.max(1, Math.floor(w / props.breakpoint));
                     let percentage = 100 / cols;
@@ -116,6 +118,7 @@ export default {
         });
 
         onUpdated(() => {
+            needsUpdate.value = true;
             updateWidth();
         });
 
