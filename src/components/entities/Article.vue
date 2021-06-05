@@ -2,7 +2,11 @@
     <EntityCard :entity="entity" v-if="card" />
 
     <div v-else ref="wrapper" :style="style">
-        <EntityCard :entity="entity" :description="false" class="header" />
+        <Card class="header">
+            <template #title>
+                {{ entity.name }}
+            </template>
+        </Card>
 
         <Divider />
 
