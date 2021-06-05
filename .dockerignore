@@ -1,0 +1,12 @@
+node_modules
+public
+src
+
+.env*
+
+.git
+.gitignore
+
+README.md
+LICENSE
+Dockerfile

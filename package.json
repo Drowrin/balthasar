@@ -5,7 +5,8 @@
         "dev": "vite",
         "build": "vite build",
         "prettier": "prettier --write .",
-        "serve": "npm run build && http-server dist --proxy http://localhost:8080?"
+        "serve": "npm run build && http-server dist --proxy http://localhost:8080?",
+        "docker-build": "npm run build && docker build -t magi/balthasar ."
     },
     "dependencies": {
         "axios": "^0.21.1",
