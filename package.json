@@ -13,6 +13,7 @@
         "fuse.js": "^6.4.6",
         "install": "^0.13.0",
         "js-yaml": "^4.1.0",
+        "melchior": "file:../melchior",
         "mitt": "^2.1.0",
         "npm": "^7.13.0",
         "primeflex": "^2.0.0",

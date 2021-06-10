@@ -17,7 +17,7 @@
                         {{ n }}
                     </template>
                     <template #content>
-                        <Markdown :source="d.rendered" />
+                        <Markdown :source="d" />
                     </template>
                 </Card>
             </GridItem>

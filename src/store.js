@@ -1,5 +1,6 @@
 import { Store } from 'vuex';
 import * as Api from './api';
+import markdown from './markdown';
 
 const searchWorker = new Worker('/search.worker.js');
 
@@ -18,6 +19,8 @@ const store = new Store({
 
         loadingData: false,
 
+        markdown: null,
+
         searchTerm: '',
         searchResults: [],
     },
@@ -32,6 +35,8 @@ const store = new Store({
             state.entityCount = Object.keys(manifest).length;
 
             state.loadingData = false;
+
+            state.markdown = markdown(state.manifest);
         },
 
         loading(state) {

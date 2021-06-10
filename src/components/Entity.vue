@@ -43,7 +43,6 @@ import yaml from 'js-yaml';
 
 import Button from 'primevue/button';
 import Card from 'primevue/card';
-import Tooltip from 'primevue/tooltip';
 
 import NotFound from './NotFound.vue';
 
@@ -104,7 +103,6 @@ export default {
     },
 
     components: { NotFound, Button, Card },
-    directives: { tooltip: Tooltip },
 
     setup(props) {
         provide('categoriesEnabled', props.categories);

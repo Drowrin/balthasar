@@ -13,6 +13,7 @@ import 'primeflex/primeflex.css';
 import './index.css';
 
 import PrimeVue from 'primevue/config';
+import Tooltip from 'primevue/tooltip';
 import mitt from 'mitt';
 import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin';
 
@@ -23,6 +24,7 @@ import Entity from './components/Entity.vue';
 const app = createApp(App).use(router).use(store);
 
 app.use(PrimeVue, { riplle: true });
+app.directive('tooltip', Tooltip);
 
 const emitter = mitt();
 

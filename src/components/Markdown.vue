@@ -1,7 +1,3 @@
-<template>
-    <div :id="uid" ref="wrapper" v-html="source" />
-</template>
-
 <style>
 h3,
 h4,
@@ -16,7 +12,7 @@ p {
 </style>
 
 <script>
-import { ref, onMounted, getCurrentInstance } from 'vue';
+import { h, compile, ref, onMounted, getCurrentInstance } from 'vue';
 import tippy from 'tippy.js';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -24,30 +20,21 @@ import { useRouter } from 'vue-router';
 export default {
     name: 'Markdown',
     props: {
-        source: String,
+        source: {
+            type: String,
+            required: true,
+        },
     },
-    setup() {
-        const wrapper = ref(null);
+    setup(props) {
         const store = useStore();
         const router = useRouter();
 
         const uid = `link${getCurrentInstance().uid}`;
+        const selector = `#${uid} a[data-tippy-content]`;
 
         onMounted(() => {
-            let nodes = wrapper.value.querySelectorAll('.entity-link');
+            let nodes = document.querySelectorAll(selector);
             nodes.forEach((n) => {
-                let id = n.getAttribute('data-entity-id');
-                let entity = store.state.manifest[id];
-
-                if (entity !== undefined) {
-                    n.setAttribute('data-tippy-content', entity.description.rendered);
-
-                    n.classList.add('markdown-tippy');
-                }
-
-                n.classList.add('card-block');
-                n.style.marginRight = 0; // Override .card-block margin so it fits better in text blocks
-
                 n.addEventListener('click', (event) => {
                     event.preventDefault();
 
@@ -59,13 +46,11 @@ export default {
                 });
             });
 
-            tippy(`#${uid} .markdown-tippy`);
+            tippy(selector);
         });
 
-        return {
-            wrapper,
-            uid,
-        };
+        return () =>
+            h('div', { id: uid }, [h(compile(store.state.markdown.makeHtml(props.source)))]);
     },
 };
 </script>
