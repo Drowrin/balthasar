@@ -70,6 +70,13 @@ body {
     padding: 0;
 }
 
+.p-scrollpanel-content {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 10px !important;
+}
+
 a .text-disabled:hover {
     color: var(--primary-color) !important;
 }
