@@ -7,6 +7,22 @@
 
             <NotFound v-else />
         </div>
+
+        <div v-if="isDev">
+            <Button
+                @click="showCode = !showCode"
+                icon="pi pi-info-circle"
+                class="p-button-rounded p-button-outlined"
+                style="position: fixed; bottom: 10px; margin: 5px"
+                v-tooltip="(showCode ? 'Hide' : 'Show') + ' data (DEV build only)'"
+            />
+
+            <Card v-if="showCode">
+                <template #content>
+                    <pre><code>{{ rawData }}</code></pre>
+                </template>
+            </Card>
+        </div>
     </div>
 </template>
 
@@ -14,14 +30,20 @@
 #entity-page > * {
     margin: auto;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
+}
+pre {
+    white-space: pre-wrap;
 }
 </style>
 
 <script>
-import { provide } from 'vue';
+import { provide, ref } from 'vue';
 import { useStore } from 'vuex';
+import yaml from 'js-yaml';
+
+import Button from 'primevue/button';
+import Card from 'primevue/card';
+import Tooltip from 'primevue/tooltip';
 
 import NotFound from './NotFound.vue';
 
@@ -81,7 +103,8 @@ export default {
         },
     },
 
-    components: { NotFound },
+    components: { NotFound, Button, Card },
+    directives: { tooltip: Tooltip },
 
     setup(props) {
         provide('categoriesEnabled', props.categories);
@@ -90,9 +113,17 @@ export default {
         const manifest = store.state.manifest;
         const entity = manifest[props.id];
 
+        const isDev = import.meta.env.DEV;
+        const showCode = ref(false);
+
         const componentType = componentTypes[entity?.type] || UnknownType;
 
-        return { manifest, entity, componentType };
+        return { manifest, entity, componentType, isDev, showCode };
+    },
+    computed: {
+        rawData() {
+            if (this.isDev) return yaml.dump(this.entity);
+        },
     },
 };
 </script>
