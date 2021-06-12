@@ -19,6 +19,16 @@
         </template>
 
         <template #content>
+            <Requirements v-if="requirements && entity.req" :requirements="entity.req" />
+
+            <Divider
+                v-if="
+                    requirements &&
+                    entity.req &&
+                    ($slots.blocks || entity.description || $slots.content)
+                "
+            />
+
             <slot name="blocks" />
 
             <Divider v-if="$slots.blocks && (entity.description || $slots.content)" />
@@ -42,9 +52,11 @@ import Divider from 'primevue/divider';
 import TitleRow from './TitleRow.vue';
 import Markdown from '../../Markdown.vue';
 
+import Requirements from './Requirements.vue';
+
 export default {
     name: 'EntityCard',
-    components: { Card, Divider, TitleRow, Markdown },
+    components: { Card, Divider, TitleRow, Markdown, Requirements },
     props: {
         entity: {
             type: Object,
@@ -63,6 +75,10 @@ export default {
             default: false,
         },
         description: {
+            type: Boolean,
+            default: true,
+        },
+        requirements: {
             type: Boolean,
             default: true,
         },
