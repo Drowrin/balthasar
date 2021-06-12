@@ -1,12 +1,7 @@
 <template>
     <EntityCard :entity="entity" :page-block="!card" :categories="!card">
         <template #beforeTags>
-            <Tag :value="entity.trait.type" severity="info" style="text-transform: capitalize" />
-        </template>
-        <template #blocks v-if="entity.trait.requirements">
-            <EntityLink tooltip :entity="entity.trait.requirements" class="card-block">
-                Requires: {{ entity.trait.requirements.name }}
-            </EntityLink>
+            <Tag :value="entity.trait" severity="info" style="text-transform: capitalize" />
         </template>
     </EntityCard>
 </template>
