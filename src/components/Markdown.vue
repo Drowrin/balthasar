@@ -30,7 +30,7 @@ export default {
         const router = useRouter();
 
         const uid = `link${getCurrentInstance().uid}`;
-        const selector = `#${uid} a[data-tippy-content]`;
+        const selector = `#${uid} a[data-id]`;
 
         onMounted(() => {
             let nodes = document.querySelectorAll(selector);
@@ -46,7 +46,13 @@ export default {
                 });
             });
 
-            tippy(selector);
+            tippy(selector, {
+                allowHTML: true,
+                content(el) {
+                    let id = el.getAttribute('data-id');
+                    return store.state.markdown.makeHtml(store.state.manifest[id]?.description);
+                },
+            });
         });
 
         return () =>

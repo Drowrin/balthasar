@@ -4,10 +4,11 @@ export default function (manifest) {
     let melchior = new Melchior();
 
     melchior.entityLink.replace = function (_, id) {
-        let name = manifest[id]?.name || id;
-        let description = manifest[id]?.description;
+        let entity = manifest[id];
+        let name = entity?.name || id;
         let path = id.replace('.', '/');
-        return `<a href="/${path}" class="card-block" data-tippy-content="${description}" style="margin-right: 0">${name}</a>`;
+        let dataID = entity === undefined ? '' : `data-id="${id}"`;
+        return `<a href="/${path}" class="card-block" ${dataID} style="margin-right: 0">${name}</a>`;
     };
 
     return melchior.converter();
