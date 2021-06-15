@@ -9,6 +9,10 @@ h6 {
 p {
     margin: 0px 0px 10px 0px;
 }
+
+.tippy-content ul, .tippy-content ol {
+    padding-left: 10px;
+}
 </style>
 
 <script>
