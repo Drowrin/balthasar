@@ -1,6 +1,6 @@
 <template>
     <EntityCard :entity="entity" :categories="!card">
-        <template #blocks>
+        <template #blocks v-if="lineage.subs.length">
             Sublineages:
             <EntityLink
                 tooltip
