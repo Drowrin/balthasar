@@ -30,6 +30,7 @@ body {
     margin-right: 5px;
     margin-bottom: 5px;
     display: inline-block;
+    text-decoration: none;
 }
 
 .page-card {
@@ -89,4 +90,8 @@ a:visited {
 
 a:hover {
     color: var(--primary-color) !important;
+}
+
+.markdown a:not(.card-block) {
+    text-decoration: underline;
 }

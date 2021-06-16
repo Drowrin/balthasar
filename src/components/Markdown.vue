@@ -17,7 +17,7 @@ p {
 </style>
 
 <script>
-import { h, compile,  onMounted, getCurrentInstance } from 'vue';
+import { h, compile, onMounted, getCurrentInstance } from 'vue';
 import tippy from 'tippy.js';
 import { useStore } from 'vuex';
 
@@ -46,7 +46,9 @@ export default {
         });
 
         return () =>
-            h('div', { id: uid }, [h(compile(store.state.markdown.makeHtml(props.source)))]);
+            h('div', { id: uid, class: 'markdown' }, [
+                h(compile(store.state.markdown.makeHtml(props.source))),
+            ]);
     },
 };
 </script>
