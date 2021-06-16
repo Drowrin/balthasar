@@ -3,6 +3,22 @@
         <Fieldset legend="Core Traits" v-if="hasCoreTraits">
             <Grid :gutter="10" compact>
                 <GridItem
+                    v-if="lineage.limited"
+                    :class="passIf(lineage.limited !== delta?.limited)"
+                >
+                    <Card>
+                        <template #title>Limited Lineage</template>
+                        <template #content>
+                            <p>This lineage can't be a Single Lineage.</p>
+                            <p>
+                                Additionally, a Dual Lineage can contain no more than one lineage
+                                with this trait.
+                            </p>
+                        </template>
+                    </Card>
+                </GridItem>
+
+                <GridItem
                     v-if="!!lineage.appearance"
                     :class="passIf(lineage.appearance !== delta?.appearance)"
                 >
@@ -15,9 +31,7 @@
                 </GridItem>
                 <GridItem
                     v-if="!!lineage.size || !!lineage.stature"
-                    :class="
-                        passIf(lineage.size !== delta?.size || lineage.stature !== delta?.stature)
-                    "
+                    :class="passIf(!delta?.size || !delta?.stature)"
                 >
                     <Card>
                         <template #title>Size</template>
@@ -29,23 +43,31 @@
                                 </span>
                             </p>
 
-                            <p v-if="!!lineage.stature?.height">
-                                Your height is between
-                                {{ lineage.stature.height[0] }} and
-                                {{ lineage.stature.height[1] }} feet.
+                            <p v-if="!!lineage.stature?.height?.mult">
+                                You are
+                                {{ multToText(lineage.stature.height.mult) }}
+                                as tall as your other lineage.
                             </p>
-                            <p v-if="!!lineage.stature?.weight">
+                            <p v-else-if="!!lineage.stature?.height">
+                                Your height is between
+                                {{ lineage.stature.height.low }} and
+                                {{ lineage.stature.height.high }} feet.
+                            </p>
+
+                            <p v-if="!!lineage.stature?.weight?.mult">
+                                You weigh
+                                {{ multToText(lineage.stature.weight.mult) }}
+                                as much as your other lineage.
+                            </p>
+                            <p v-else-if="!!lineage.stature?.weight">
                                 Your weight is between
-                                {{ lineage.stature.weight[0] }} and
-                                {{ lineage.stature.weight[1] }} lb.
+                                {{ lineage.stature.weight.low }} and
+                                {{ lineage.stature.weight.high }} lb.
                             </p>
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem
-                    v-if="!!lineage.languages"
-                    :class="passIf(lineage.languages !== delta?.languages)"
-                >
+                <GridItem v-if="!!lineage.languages" :class="passIf(!delta?.languages)">
                     <Card>
                         <template #title>Languages</template>
                         <template #content>
@@ -60,16 +82,39 @@
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem v-if="!!lineage.age" :class="passIf(lineage.age !== delta?.age)">
+                <GridItem v-if="!!lineage.age" :class="passIf(!delta?.age)">
                     <Card>
                         <template #title>Age</template>
                         <template #content>
-                            <p>
-                                You reach physical maturity and stop growing at
-                                {{ lineage.age.maturiy }}.
+                            <p v-if="typeof lineage.age.maturity === 'string'">
+                                You mature
+                                {{ multToText(lineage.age.maturity) }}
+                                as fast as your other lineage.
                             </p>
-                            <p>You are considered an adult at {{ lineage.age.adulthood }}.</p>
-                            <p>Your expected lifespan is {{ lineage.age.lifespan }} years.</p>
+                            <p v-else>
+                                You reach physical maturity and stop growing at
+                                {{ lineage.age.maturity }}.
+                            </p>
+
+                            <p v-if="typeof lineage.age.adulthood === 'string'">
+                                You reach adulthood
+                                {{ multToText(lineage.age.adulthood) }}
+                                as soon as your other lineage.
+                            </p>
+                            <p v-else>
+                                You are considered an adult at
+                                {{ lineage.age.adulthood }}.
+                            </p>
+
+                            <p v-if="typeof lineage.age.lifespan === 'string'">
+                                You live
+                                {{ multToText(lineage.age.lifespan) }}
+                                as long as your other lineage.
+                            </p>
+                            <p v-else>
+                                Your expected lifespan is
+                                {{ lineage.age.lifespan }}.
+                            </p>
                         </template>
                     </Card>
                 </GridItem>
@@ -173,8 +218,23 @@ export default {
             return !!props.delta && b ? 'passthrough' : '';
         }
 
+        function multToText(m) {
+            console.log(m);
+            switch (m) {
+                case 'x1':
+                    return 'just';
+                case 'x0.5':
+                    return 'half';
+                case 'x2':
+                    return 'twice';
+                default:
+                    return m.substr(1) + 'x';
+            }
+        }
+
         return {
             passIf,
+            multToText,
             hasCoreTraits,
             hasMinorTraits,
             hasMajorTraits,
