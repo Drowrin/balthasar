@@ -10,16 +10,16 @@ p {
     margin: 0px 0px 10px 0px;
 }
 
-.tippy-content ul, .tippy-content ol {
+.tippy-content ul,
+.tippy-content ol {
     padding-left: 10px;
 }
 </style>
 
 <script>
-import { h, compile, ref, onMounted, getCurrentInstance } from 'vue';
+import { h, compile,  onMounted, getCurrentInstance } from 'vue';
 import tippy from 'tippy.js';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 
 export default {
     name: 'Markdown',
@@ -31,25 +31,11 @@ export default {
     },
     setup(props) {
         const store = useStore();
-        const router = useRouter();
 
         const uid = `link${getCurrentInstance().uid}`;
         const selector = `#${uid} a[data-id]`;
 
         onMounted(() => {
-            let nodes = document.querySelectorAll(selector);
-            nodes.forEach((n) => {
-                n.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    const { altKey, ctrlKey, metaKey, shiftKey, button } = event;
-                    if (metaKey || altKey || ctrlKey || shiftKey) return;
-                    if (button !== undefined && button !== 0) return;
-
-                    router.push(new URL(n.href).pathname);
-                });
-            });
-
             tippy(selector, {
                 allowHTML: true,
                 content(el) {

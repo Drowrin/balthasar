@@ -8,7 +8,7 @@ export default function (manifest) {
         let name = entity?.name || id;
         let path = id.replace('.', '/');
         let dataID = entity === undefined ? '' : `data-id="${id}"`;
-        return `<a href="/${path}" class="card-block" ${dataID} style="margin-right: 0">${name}</a>`;
+        return `<router-link :to="'/${path}'" class="card-block" ${dataID} style="margin-right: 0">${name}</router-link>`;
     };
 
     return melchior.converter();
