@@ -29,37 +29,46 @@
                         </template>
                     </Card>
                 </GridItem>
-                <GridItem
-                    v-if="!!lineage.size || !!lineage.stature"
-                    :class="passIf(!delta?.size || !delta?.stature)"
-                >
+                <GridItem v-if="!!lineage.size || !!lineage.stature">
                     <Card>
                         <template #title>Size</template>
                         <template #content>
-                            <p v-if="!!lineage.size">
+                            <p v-if="!!lineage.size" :class="passIf(!delta?.size)">
                                 Your size category is
                                 <span style="text-transform: capitalize">
                                     {{ lineage.size }}.
                                 </span>
                             </p>
 
-                            <p v-if="!!lineage.stature?.height?.mult">
+                            <p
+                                v-if="!!lineage.stature?.height?.mult"
+                                :class="passIf(!delta?.stature?.height)"
+                            >
                                 You are
                                 {{ multToText(lineage.stature.height.mult) }}
                                 as tall as your other lineage.
                             </p>
-                            <p v-else-if="!!lineage.stature?.height">
+                            <p
+                                v-else-if="!!lineage.stature?.height"
+                                :class="passIf(!delta?.stature?.height)"
+                            >
                                 Your height is between
                                 {{ lineage.stature.height.low }} and
                                 {{ lineage.stature.height.high }} feet.
                             </p>
 
-                            <p v-if="!!lineage.stature?.weight?.mult">
+                            <p
+                                v-if="!!lineage.stature?.weight?.mult"
+                                :class="passIf(!delta?.stature?.weight)"
+                            >
                                 You weigh
                                 {{ multToText(lineage.stature.weight.mult) }}
                                 as much as your other lineage.
                             </p>
-                            <p v-else-if="!!lineage.stature?.weight">
+                            <p
+                                v-else-if="!!lineage.stature?.weight"
+                                :class="passIf(!delta?.stature?.weight)"
+                            >
                                 Your weight is between
                                 {{ lineage.stature.weight.low }} and
                                 {{ lineage.stature.weight.high }} lb.
@@ -160,11 +169,13 @@
 </template>
 
 <style>
-.passthrough .p-card {
+.passthrough .p-card,
+p.passthrough {
     opacity: 0.72;
     border: 1.5px dashed var(--surface-900);
 }
-.passthrough .p-card-title::before {
+.passthrough .p-card-title::before,
+p.passthrough::before {
     content: var(--origin-text);
 }
 </style>
