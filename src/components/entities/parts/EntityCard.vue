@@ -1,7 +1,7 @@
 <template>
     <Card :class="c">
         <template #header v-if="entity.img && image">
-            <img :src="entity.img.uri" />
+            <img :src="entity.img.uri" class="header-image"/>
         </template>
 
         <template #title>
@@ -43,6 +43,17 @@
         </template>
     </Card>
 </template>
+
+<style>
+.header-image {
+    max-height: 600px;
+    max-width: 100%;
+    width: auto !important;
+    height: auto !important;
+    margin: 10px auto 0;
+    display: block
+}
+</style>
 
 <script>
 import { provide } from 'vue';
