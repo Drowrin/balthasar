@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { provide } from 'vue';
 import Fieldset from 'primevue/fieldset';
 
 import EntityCard from './parts/EntityCard.vue';
@@ -29,6 +30,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    provide: {
+        entityBrief: true,
     },
 };
 </script>
