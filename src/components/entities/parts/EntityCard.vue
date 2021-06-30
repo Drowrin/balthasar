@@ -1,7 +1,7 @@
 <template>
     <Card :class="c">
         <template #header v-if="entity.img && image">
-            <img :src="entity.img.uri" class="header-image"/>
+            <img :src="entity.img.uri" class="header-image" />
         </template>
 
         <template #title>
@@ -34,7 +34,10 @@
             <Divider v-if="$slots.blocks && (entity.description || $slots.content)" />
 
             <slot name="content">
-                <Markdown :source="entity.description" v-if="description && entity.description" />
+                <Markdown
+                    :source="brief ? entity.brief : entity.description"
+                    v-if="description && entity.description"
+                />
             </slot>
         </template>
 
@@ -50,13 +53,13 @@
     max-width: 100%;
     width: auto !important;
     height: auto !important;
-    margin: 10px auto 0;
-    display: block
+    margin: auto;
+    display: block;
 }
 </style>
 
 <script>
-import { provide } from 'vue';
+import { provide, inject } from 'vue';
 
 import Card from 'primevue/card';
 import Divider from 'primevue/divider';
@@ -101,7 +104,9 @@ export default {
             provide('categoriesEnabled', props.categories);
         }
 
-        return { c };
+        let brief = inject('entityBrief');
+
+        return { c, brief };
     },
 };
 </script>

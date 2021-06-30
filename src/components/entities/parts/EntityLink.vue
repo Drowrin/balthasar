@@ -26,7 +26,7 @@ export default {
         onMounted(() => {
             if (props.tooltip) {
                 tippy('#' + id, {
-                    content: props.entity.description,
+                    content: props.entity.brief,
                     ignoreAttributes: true,
                 });
             }

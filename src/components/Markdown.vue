@@ -40,7 +40,7 @@ export default {
                 allowHTML: true,
                 content(el) {
                     let id = el.getAttribute('data-id');
-                    return store.state.markdown.makeHtml(store.state.manifest[id]?.description);
+                    return store.state.markdown.makeHtml(store.state.manifest[id]?.brief);
                 },
             });
         });

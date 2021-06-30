@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, provide } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -23,6 +23,8 @@ export default {
         store.commit('searchTerm', route.query.q);
 
         store.dispatch('search');
+
+        provide('entityBrief', true);
 
         return { results: computed(() => store.state.searchResults.slice(0, 50)) };
     },

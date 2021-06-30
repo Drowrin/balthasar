@@ -46,7 +46,7 @@
 </style>
 
 <script>
-import { onMounted, onUnmounted, computed, watch } from 'vue';
+import { onMounted, onUnmounted, computed, watch, provide } from 'vue';
 import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
@@ -60,6 +60,8 @@ export default {
     name: 'App',
     components: { Sidebar, ScrollPanel },
     setup() {
+        provide('entityBrief', false);
+
         const store = useStore();
 
         let ws = Api.webSocket();
