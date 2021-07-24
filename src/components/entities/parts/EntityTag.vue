@@ -1,5 +1,5 @@
 <template>
-    <router-link :id="id" :to="`/${entity.id.replace('.', '/')}`">
+    <router-link :id="id" :to="`/${entity.id.replaceAll('.', '/')}`">
         <Tag :value="entity.name" :severity="severity">
             <slot />
         </Tag>
