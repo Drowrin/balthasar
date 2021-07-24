@@ -95,3 +95,15 @@ a:hover {
 .markdown a:not(.card-block) {
     text-decoration: underline;
 }
+
+.p-card-content table {
+    border-collapse: collapse;
+    margin: 0px 0px 10px 0px;
+    border-style: hidden;
+}
+
+.p-card-content th,
+td {
+    border: 1px solid var(--text-color);
+    padding: 2px 5px;
+}
