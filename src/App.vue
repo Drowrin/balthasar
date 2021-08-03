@@ -8,27 +8,19 @@
 </template>
 
 <style>
-#scrollpanel {
-    margin-left: 250px;
-    margin-bottom: 0px;
-    height: 100vh;
+#app {
+    display: flex;
+    flex-direction: column;
 }
 
-#content {
-    min-height: 100vh;
+#scrollpanel {
+    margin-top: 69px;
+    padding: 12.5px 24px 24px 24px;
     background-color: var(--surface-0);
-    border-right: 1px ridge var(--surface-400);
 }
 
 .p-scrollpanel {
     background-color: var(--surface-50);
-}
-
-.p-scrollpanel-content {
-    padding-bottom: 0px;
-    padding-top: 0px;
-    padding-left: 0px;
-    padding-right: 10px;
 }
 </style>
 
