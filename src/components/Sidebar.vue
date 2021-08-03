@@ -1,12 +1,12 @@
 <template>
     <div id="sidebar">
-        <div style="min-width: 100%; text-align: center; padding: 10px">
+        <div>
             <router-link to="/">
-                <i class="pi pi-home" style="font-size: 40px" />
+                <i class="pi pi-home" id="icon"/>
             </router-link>
         </div>
-        <form @submit.prevent="search" style="margin: auto; width: fit-content">
-            <span class="p-float-label p-input-icon-right">
+        <form @submit.prevent="search">
+            <span class="p-float-label p-input-icon-right input-container">
                 <InputText
                     id="searchbox"
                     type="text"
@@ -26,18 +26,33 @@
 <style>
 #sidebar {
     position: fixed;
-    top: 0;
-    left: 0;
-
-    min-height: 100vh;
-    width: 250px;
+    width: 100%;
 
     padding: 12.5px;
+    display: flex;
+    z-index: 2;
 
     background-color: var(--surface-50);
-    border-right: 1px ridge var(--surface-400);
+    border-bottom: 1px ridge var(--surface-400);
     box-shadow: 1px 0 2px rgba(0, 0, 0, 0.35), 1px 0 3px rgba(0, 0, 0, 0.2),
         1px 0 4px rgba(0, 0, 0, 0.15);
+}
+
+#icon {
+    font-size: 40px;
+    padding-right: 12.5px;
+}
+
+#searchbox {
+    width: 100%;
+}
+
+.input-container {
+    width: 100%;
+}
+
+form {
+    width: 100%;
 }
 </style>
 
