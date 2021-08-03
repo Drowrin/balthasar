@@ -237,7 +237,6 @@ export default {
         }
 
         function multToText(m) {
-            console.log(m);
             switch (m) {
                 case 'x1':
                     return 'just';
