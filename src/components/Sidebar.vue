@@ -2,7 +2,7 @@
     <div id="sidebar">
         <div>
             <router-link to="/">
-                <i class="pi pi-home" id="icon"/>
+                <i class="pi pi-home" id="icon" />
             </router-link>
         </div>
         <form @submit.prevent="search">
@@ -26,6 +26,7 @@
 <style>
 #sidebar {
     position: fixed;
+    top: 0;
     width: 100%;
 
     padding: 12.5px;

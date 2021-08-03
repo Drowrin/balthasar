@@ -2,7 +2,7 @@
     <component v-if="card" :is="componentType" :entity="entity" card />
 
     <div v-else id="entity-page">
-        <div>
+        <div id="entity-content">
             <component v-if="entity !== undefined" :is="componentType" :entity="entity" />
 
             <NotFound v-else />
@@ -13,7 +13,7 @@
                 @click="showCode = !showCode"
                 icon="pi pi-info-circle"
                 class="p-button-rounded p-button-outlined"
-                style="position: fixed; bottom: 10px; margin: 5px"
+                style="position: fixed; bottom: 0; margin: 10px"
                 v-tooltip="(showCode ? 'Hide' : 'Show') + ' data (DEV build only)'"
             />
 
@@ -27,12 +27,19 @@
 </template>
 
 <style>
-#entity-page > * {
-    margin: auto;
-    padding: 10px;
-}
 pre {
     white-space: pre-wrap;
+}
+
+#entity-content {
+    margin: auto;
+    padding: 0 0 10px;
+}
+
+@media screen and (min-width: 481px) {
+    #entity-content {
+        padding: 10px;
+    }
 }
 </style>
 

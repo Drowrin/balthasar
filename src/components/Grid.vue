@@ -26,6 +26,10 @@
     margin-bottom: var(--grid-gutter);
     width: var(--grid-width);
 }
+
+.grid-item:last-child {
+    margin-bottom: 0;
+}
 </style>
 
 <script>

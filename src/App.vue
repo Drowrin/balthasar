@@ -1,26 +1,20 @@
 <template>
     <Sidebar />
-    <ScrollPanel id="scrollpanel">
-        <div id="content">
-            <router-view :key="$route.fullPath + hash" />
-        </div>
-    </ScrollPanel>
+    <div id="content">
+        <router-view :key="$route.fullPath + hash" />
+    </div>
 </template>
 
 <style>
 #app {
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
-#scrollpanel {
+#content {
     margin-top: 69px;
-    padding: 12.5px 24px 24px 24px;
-    background-color: var(--surface-0);
-}
-
-.p-scrollpanel {
-    background-color: var(--surface-50);
+    overflow-y: auto;
+    height: calc(100% - 69px);
 }
 </style>
 
@@ -42,15 +36,13 @@ import { onMounted, onUnmounted, computed, watch, provide } from 'vue';
 import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
-import ScrollPanel from 'primevue/scrollpanel';
-
 import Sidebar from './components/Sidebar.vue';
 
 import * as Api from './api';
 
 export default {
     name: 'App',
-    components: { Sidebar, ScrollPanel },
+    components: { Sidebar },
     setup() {
         provide('entityBrief', false);
 
