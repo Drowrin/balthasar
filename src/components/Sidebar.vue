@@ -46,6 +46,7 @@
 
 #searchbox {
     width: 100%;
+    font-size: 16px;
 }
 
 .input-container {
