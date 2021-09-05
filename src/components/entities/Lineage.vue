@@ -15,6 +15,26 @@
     <LineageDetails v-if="!card" :lineage="lineage" />
 </template>
 
+<style>
+.p-fieldset-legend-text {
+    font-size: 1rem;
+}
+
+.p-fieldset {
+    background: none;
+    margin-top: 20px;
+}
+
+.p-fieldset .p-fieldset-legend {
+    background: none;
+    padding: 0px 10px 0 10px;
+}
+
+.p-fieldset .p-fieldset-content {
+    padding: 0;
+}
+</style>
+
 <script>
 import EntityCard from './parts/EntityCard.vue';
 import EntityLink from './parts/EntityLink.vue';
