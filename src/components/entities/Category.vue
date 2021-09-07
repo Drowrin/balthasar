@@ -1,8 +1,13 @@
 <template>
     <EntityCard :entity="entity" categories v-if="card" />
 
-    <Fieldset :toggleable="catfilters.length > 0" v-else :legend="entity.name">
-        <Card>
+    <Fieldset
+        :toggleable="catfilters.length > 0"
+        v-else
+        :legend="entity.name"
+        class="category-fieldset"
+    >
+        <Card style="margin-bottom: 5px">
             <template #header v-if="entity.img">
                 <img :src="entity.img.uri" class="header-image" />
             </template>
@@ -19,7 +24,7 @@
             :catfilters="catfilters.concat([entity.id])"
         />
 
-        <Divider />
+        <Divider v-if="rootents.length" />
 
         <Grid :gutter="10" compact>
             <GridItem v-for="ent in rootents" :key="ent.id">
@@ -30,21 +35,8 @@
 </template>
 
 <style>
-.p-fieldset-legend-text {
-    font-size: 1.75rem;
-}
-
-.p-fieldset {
-    background: none;
-}
-
-.p-fieldset .p-fieldset-legend {
-    background: none;
-    padding: 0px 10px 0 10px;
-}
-
-.p-fieldset .p-fieldset-content {
-    padding: 0;
+.category-fieldset {
+    margin-top: 5px;
 }
 </style>
 

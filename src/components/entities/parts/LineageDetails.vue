@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="lineage-details">
         <Fieldset legend="Core Traits" v-if="hasCoreTraits">
             <Grid :gutter="10" compact>
                 <GridItem
@@ -181,9 +181,14 @@ p.passthrough {
     opacity: 0.72;
     border: 1.5px dashed var(--surface-900);
 }
+
 .passthrough .p-card-title::before,
 p.passthrough::before {
     content: var(--origin-text);
+}
+
+.lineage-details .p-fieldset {
+    margin-top: 20px;
 }
 </style>
 
