@@ -1,11 +1,12 @@
 <template>
     <div
+        :id="uid"
         ref="grid"
         class="grid"
         :style="`--grid-width: ${gridWidth}; --grid-gutter: ${gutter}px`"
         v-masonry
         transition-duration="0s"
-        item-selector=".grid-item"
+        :item-selector="`#${uid} > .grid-item`"
         :percent-position="true"
         :gutter="gutter"
     >
@@ -33,7 +34,7 @@
 </style>
 
 <script>
-import { onMounted, onUpdated, onBeforeUnmount, ref, inject } from 'vue';
+import { onMounted, onUpdated, onBeforeUnmount, ref, inject, getCurrentInstance } from 'vue';
 
 export default {
     name: 'Grid',
@@ -78,6 +79,7 @@ export default {
     },
     setup(props) {
         const redrawMasonry = inject('redrawMasonry');
+        const uid = `grid${getCurrentInstance().uid}`;
 
         const grid = ref(null);
         const gridWidth = ref(`calc(100% - ${props.offset})`);
@@ -129,7 +131,7 @@ export default {
             updateWidth();
         });
 
-        return { grid, gridWidth };
+        return { grid, gridWidth, uid };
     },
 };
 </script>
