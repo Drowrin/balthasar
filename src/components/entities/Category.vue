@@ -28,7 +28,7 @@
 
         <Grid :gutter="10" compact v-if="rootents.length">
             <GridItem v-for="ent in rootents" :key="ent.id">
-                <Entity :id="ent.id" card />
+                <Entity :id="ent.id" card categories />
             </GridItem>
         </Grid>
     </Fieldset>
