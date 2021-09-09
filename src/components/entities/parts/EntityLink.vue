@@ -6,6 +6,7 @@
 
 <script>
 import { getCurrentInstance, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import tippy from 'tippy.js';
 
 export default {
@@ -21,12 +22,14 @@ export default {
         },
     },
     setup(props) {
+        const store = useStore();
         const id = `link${getCurrentInstance().uid}`;
 
         onMounted(() => {
-            if (props.tooltip) {
+            if (props.tooltip && props.entity.brief) {
                 tippy('#' + id, {
-                    content: props.entity.brief,
+                    allowHTML: true,
+                    content: store.state.markdown.makeHtml(props.entity.brief),
                     ignoreAttributes: true,
                 });
             }

@@ -36,12 +36,16 @@ export default {
         const selector = `#${uid} a[data-id]`;
 
         onMounted(() => {
-            tippy(selector, {
-                allowHTML: true,
-                content(el) {
-                    let id = el.getAttribute('data-id');
-                    return store.state.markdown.makeHtml(store.state.manifest[id]?.brief);
-                },
+            let links = document.querySelectorAll(selector);
+            links.forEach((el) => {
+                let id = el.getAttribute('data-id');
+                let entity = store.state.manifest[id];
+                if (entity?.brief) {
+                    tippy(el, {
+                        allowHTML: true,
+                        content: store.state.markdown.makeHtml(entity?.brief),
+                    });
+                }
             });
         });
 
