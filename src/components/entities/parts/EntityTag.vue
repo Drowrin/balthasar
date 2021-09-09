@@ -1,10 +1,16 @@
 <template>
-    <router-link :id="id" :to="`/${entity.id.replaceAll('.', '/')}`">
+    <router-link :id="id" :to="`/${entity.id.replaceAll('.', '/')}`" class="entity-tag-link">
         <Tag :value="entity.name" :severity="severity">
             <slot />
         </Tag>
     </router-link>
 </template>
+
+<style>
+.entity-tag-link {
+    display: inline-flex;
+}
+</style>
 
 <script>
 import { getCurrentInstance, onMounted } from 'vue';
