@@ -29,7 +29,9 @@
                 "
             />
 
-            <slot name="blocks" />
+            <div v-if="$slots.blocks" class="blocks-section">
+                <slot name="blocks" />
+            </div>
 
             <Divider v-if="$slots.blocks && (entity.description || $slots.content)" />
 
@@ -55,6 +57,11 @@
     height: auto !important;
     margin: auto;
     display: block;
+}
+
+.blocks-section .card-block {
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 </style>
 
